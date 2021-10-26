@@ -1,4 +1,4 @@
-package com.draw.canvas.labb3;
+package com.draw.canvas.labb3.shapes;
 
 import javafx.scene.paint.Color;
 
@@ -13,7 +13,7 @@ public abstract class Shape {
     //abstract methods to be implemented in subclasses?
 
 
-    public Shape(double x, double y, Color color) {
+    public Shape(Color color, double x, double y) {
         this.x = x;
         this.y = y;
         this.color = color;

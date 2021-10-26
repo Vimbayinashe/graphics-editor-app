@@ -1,5 +1,7 @@
 package com.draw.canvas.labb3;
 
+import com.draw.canvas.labb3.shapes.Shape;
+import com.draw.canvas.labb3.shapes.ShapeOption;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
