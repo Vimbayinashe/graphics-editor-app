@@ -22,17 +22,19 @@
 
     <ButtonBar prefHeight="40.0" prefWidth="100.0">
        <buttons>
-         <Button mnemonicParsing="false" text="Circle" translateX="-800.0" />
-         <Button mnemonicParsing="false" text="Triangle" translateX="-800.0" />
-         <Button mnemonicParsing="false" text="Button" translateX="-800.0" />
+         <Button mnemonicParsing="false" onAction="#onCircleSelected" text="Circle"   />
+         <Button mnemonicParsing="false" text="Square"   />
+         <Button mnemonicParsing="false" text="Button"   />
      </buttons>
    </ButtonBar>
 
-    <StackPane fx:id="canvasParent" prefHeight="600" prefWidth="600" maxWidth="1000" translateX="100"
-               translateY="120.0">
+<!--  todo: use CSS styling to position StackPane-->
+<!--    <StackPane fx:id="canvasParent" prefHeight="600" prefWidth="600" maxWidth="1000" translateX="100"-->
+    <StackPane fx:id="canvasParent" prefHeight="400" prefWidth="400" maxWidth="800" maxHeight="600">
 <!--        <ResizableCanvas fx:id="canvas" onMouseClicked="#canvasClicked"/>-->
-        <Canvas fx:id="canvas" />
+        <Canvas fx:id="canvas" onMouseClicked="#canvasClicked" height="${canvas.parent.height}" width="${canvas.parent.width}"/>
     </StackPane>
+
 
     <stylesheets>
         <URL value="@css/stylesheet.css" />

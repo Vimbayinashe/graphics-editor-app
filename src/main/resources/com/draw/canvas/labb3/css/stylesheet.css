@@ -2,6 +2,11 @@
     -fx-border-color: lightblue;
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
+    -fx-background-color: pink;
+}
+
+ButtonBar {
+   -fx-padding: 40px;
 }
 
 .root {

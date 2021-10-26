@@ -1,5 +1,6 @@
 package com.draw.canvas.labb3.shapes;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.util.Objects;
@@ -21,16 +22,18 @@ public class Circle extends Shape{
         this.radius *= factor;
     }
 
-    //todo
-    public void draw() {
-
+    public void draw(GraphicsContext graphicsContext) {
+        graphicsContext.setFill(getColor());
+        graphicsContext.fillOval(getX() - radius, getY() - radius, radius * 2, radius * 2);
     }
 
-    //todo
     public boolean isInside(double x, double y) {
+        double dx = x - getX();
+        double dy = y - getY();
 
+        double distanceFromCenterSquared = dx * dx + dy * dy;
 
-        return false;
+        return distanceFromCenterSquared <= radius * radius;
     }
 
     @Override

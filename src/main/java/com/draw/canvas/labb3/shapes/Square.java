@@ -1,5 +1,6 @@
 package com.draw.canvas.labb3.shapes;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.util.Objects;
@@ -21,16 +22,20 @@ public class Square extends Shape {
         return this;
     }
 
-    //todo
-    public void draw() {
-
+    public void draw(GraphicsContext graphicsContext) {
+        graphicsContext.setFill(getColor());
+        graphicsContext.fillRect(getX() - length / 2, getY() - length / 2, length, length);
     }
 
     //todo
     public boolean isInside(double x, double y) {
+        double graphicalX = getX() - length / 2;
+        double graphicalY = getY() - length / 2;
 
+        boolean withinX = getX() <= x && x <= getX() + length;
+        boolean withinY = getY() <= y && y <= getY() + length;
 
-        return false;
+        return withinX && withinY;
     }
 
 
