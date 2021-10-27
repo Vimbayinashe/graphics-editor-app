@@ -1,11 +1,10 @@
 package com.draw.canvas.labb3;
 
-import com.draw.canvas.labb3.shapes.Circle;
+import com.draw.canvas.labb3.shapes.basicshapes.Circle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
@@ -36,7 +35,7 @@ public class Controller {
     private void draw() {
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
 
-        for (var shape : model.observableShapes) {
+        for (var shape : model.shapes) {
             shape.draw(graphicsContext);
         }
     }
@@ -65,7 +64,7 @@ public class Controller {
     public void canvasClicked(MouseEvent mouseEvent) {
         System.out.println("on Canvas clicked!");
 
-        model.observableShapes.add(new Circle(model.getColor(), mouseEvent.getX(), mouseEvent.getY(), 10.0));
+        model.shapes.add(new Circle(model.getColor(), mouseEvent.getX(), mouseEvent.getY(), 10.0));
         //addNewShape(event);
         draw();
     }

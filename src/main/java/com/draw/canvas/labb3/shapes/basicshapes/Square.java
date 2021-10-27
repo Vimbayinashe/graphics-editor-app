@@ -1,5 +1,6 @@
-package com.draw.canvas.labb3.shapes;
+package com.draw.canvas.labb3.shapes.basicshapes;
 
+import com.draw.canvas.labb3.shapes.Shape;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 

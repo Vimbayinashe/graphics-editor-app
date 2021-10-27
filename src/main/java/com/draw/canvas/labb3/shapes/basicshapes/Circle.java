@@ -1,11 +1,12 @@
-package com.draw.canvas.labb3.shapes;
+package com.draw.canvas.labb3.shapes.basicshapes;
 
+import com.draw.canvas.labb3.shapes.Shape;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.util.Objects;
 
-public class Circle extends Shape{
+public class Circle extends Shape {
     private double radius;
 
     public Circle(Color color, double x, double y, double radius) {

@@ -12,13 +12,15 @@ public class Model {
 
     //color //shape //co-ords
 
+    //todo: a variable that holds ratio (size) of original shape size
+
     private final ObjectProperty<Color> color;
-    private final ObjectProperty<ShapeOption> selectedShape;
-    ObservableList<Shape> observableShapes = FXCollections.observableArrayList();
+    private final ObjectProperty<ShapeOption> shape;
+    ObservableList<Shape> shapes = FXCollections.observableArrayList();
 
     public Model() {
         this.color = new SimpleObjectProperty<>(Color.BLACK);
-        this.selectedShape = new SimpleObjectProperty<>(ShapeOption.CIRCLE);
+        this.shape = new SimpleObjectProperty<>(ShapeOption.CIRCLE);
     }
 
     public Color getColor() {
@@ -33,24 +35,24 @@ public class Model {
         this.color.set(color);
     }
 
-    public ShapeOption getSelectedShape() {
-        return selectedShape.get();
+    public ShapeOption getShape() {
+        return shape.get();
     }
 
-    public ObjectProperty<ShapeOption> selectedShapeProperty() {
-        return selectedShape;
+    public ObjectProperty<ShapeOption> shapeProperty() {
+        return shape;
     }
 
-    public void setSelectedShape(ShapeOption selectedShape) {
-        this.selectedShape.set(selectedShape);
+    public void setShape(ShapeOption shape) {
+        this.shape.set(shape);
     }
 
-    public ObservableList<Shape> getObservableShapes() {
-        return observableShapes;
+    public ObservableList<Shape> getShapes() {
+        return shapes;
     }
 
-    public void setObservableShapes(Shape shape) {
-        observableShapes.add(shape);
+    public void setShapes(Shape shape) {
+        shapes.add(shape);
     }
 
     //add getters & setters & property

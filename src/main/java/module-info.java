@@ -8,4 +8,6 @@ module com.draw.canvas.labb {
     exports com.draw.canvas.labb3;
     exports com.draw.canvas.labb3.shapes;
     opens com.draw.canvas.labb3.shapes to javafx.fxml;
+    exports com.draw.canvas.labb3.shapes.basicshapes;
+    opens com.draw.canvas.labb3.shapes.basicshapes to javafx.fxml;
 }
