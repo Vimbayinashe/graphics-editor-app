@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
@@ -20,6 +21,8 @@ public class Controller {
     private Canvas canvas;
     @FXML
     private StackPane canvasParent;
+    @FXML
+    private ColorPicker colorPicker;
 
     public Controller() {}
 
@@ -29,6 +32,8 @@ public class Controller {
 
     public void initialize() {
         model = new Model();
+
+        colorPicker.valueProperty().bindBidirectional(model.colorProperty());
 
         //add canvas Listener to re-draw when re-sized      //may not be necessary!
         canvas.widthProperty().addListener(observable -> draw());

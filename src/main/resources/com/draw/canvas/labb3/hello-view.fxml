@@ -24,7 +24,8 @@
        <buttons>
          <Button mnemonicParsing="false" onAction="#onCircleSelected" text="Circle"   />
          <Button mnemonicParsing="false" onAction="#onSquareSelected" text="Square"   />
-         <Button mnemonicParsing="false" text="Button"   />
+         <Button mnemonicParsing="false" text="Button" />
+         <ColorPicker fx:id="colorPicker" />
      </buttons>
    </ButtonBar>
 
