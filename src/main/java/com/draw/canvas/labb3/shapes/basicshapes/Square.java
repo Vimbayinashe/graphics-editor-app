@@ -20,6 +20,7 @@ public class Square extends Shape {
 
     public Square setLength(double length) {
         this.length = length;
+        //call draw here?   //NO -> single use policy, change length => call draw on shape
         return this;
     }
 

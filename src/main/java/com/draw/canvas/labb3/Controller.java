@@ -2,12 +2,9 @@ package com.draw.canvas.labb3;
 
 import com.draw.canvas.labb3.shapes.ShapeOption;
 import com.draw.canvas.labb3.shapes.Shapes;
-import com.draw.canvas.labb3.shapes.basicshapes.Circle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -55,9 +52,25 @@ public class Controller {
 
     private void addNewShape(MouseEvent event) {
         switch (model.getShape()) {
-            case CIRCLE -> model.shapes.add(Shapes.circleOf(model.getColor(), event.getX(), event.getY(), 10.0));
-            case SQUARE ->  model.shapes.add(Shapes.squareOf(model.getColor(), event.getX(), event.getY(), 20.0));
+            case CIRCLE -> addCircle(event);
+            case SQUARE -> addSquare(event);
         }
+    }
+
+    private void addSquare(MouseEvent event) {
+        model.shapes.add(Shapes.squareOf(model.getColor(), event.getX(), event.getY(), length()));
+    }
+
+    private double length() {
+        return model.getSize() * model.getSizeRatio() * 2;
+    }
+
+    private void addCircle(MouseEvent event) {
+        model.shapes.add(Shapes.circleOf(model.getColor(), event.getX(), event.getY(), radius()));
+    }
+
+    private double radius() {
+        return model.getSize() * model.getSizeRatio();
     }
 
     public void onCircleSelected() {

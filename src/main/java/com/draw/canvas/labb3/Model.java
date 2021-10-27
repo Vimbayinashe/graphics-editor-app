@@ -2,7 +2,9 @@ package com.draw.canvas.labb3;
 
 import com.draw.canvas.labb3.shapes.Shape;
 import com.draw.canvas.labb3.shapes.ShapeOption;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,11 +18,16 @@ public class Model {
 
     private final ObjectProperty<Color> color;
     private final ObjectProperty<ShapeOption> shape;
+    private final DoubleProperty size;
+    private final DoubleProperty sizeRatio;
+
     ObservableList<Shape> shapes = FXCollections.observableArrayList();
 
     public Model() {
         this.color = new SimpleObjectProperty<>(Color.BLACK);
         this.shape = new SimpleObjectProperty<>(ShapeOption.CIRCLE);
+        this.size = new SimpleDoubleProperty(10.0);
+        this.sizeRatio = new SimpleDoubleProperty(1.0);
     }
 
     public Color getColor() {
@@ -53,6 +60,30 @@ public class Model {
 
     public void setShapes(Shape shape) {
         shapes.add(shape);
+    }
+
+    public double getSize() {
+        return size.get();
+    }
+
+    public DoubleProperty sizeProperty() {
+        return size;
+    }
+
+    public void setSize(double size) {
+        this.size.set(size);
+    }
+
+    public double getSizeRatio() {
+        return sizeRatio.get();
+    }
+
+    public DoubleProperty sizeRatioProperty() {
+        return sizeRatio;
+    }
+
+    public void setSizeRatio(double sizeRatio) {
+        this.sizeRatio.set(sizeRatio);
     }
 
     //add getters & setters & property
