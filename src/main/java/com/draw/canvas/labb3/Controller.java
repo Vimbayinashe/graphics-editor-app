@@ -1,10 +1,13 @@
 package com.draw.canvas.labb3;
 
+import com.draw.canvas.labb3.shapes.ShapeOption;
+import com.draw.canvas.labb3.shapes.Shapes;
 import com.draw.canvas.labb3.shapes.basicshapes.Circle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
@@ -27,9 +30,14 @@ public class Controller {
     public void initialize() {
         model = new Model();
 
-        //add canvas Listener to re-draw when re-sized
+        //add canvas Listener to re-draw when re-sized      //may not be necessary!
         canvas.widthProperty().addListener(observable -> draw());
         canvas.heightProperty().addListener(observable -> draw());
+    }
+
+    public void canvasClicked(MouseEvent event) {
+        addNewShape(event);
+        draw();
     }
 
     private void draw() {
@@ -40,33 +48,19 @@ public class Controller {
         }
     }
 
-    @FXML
-    public void onCanvasClicked(MouseEvent event) {
-
-
-//        model.observableShapes.add(new Circle(model.getColor(), event.getX(), event.getY(), 10.0));
-//        //addNewShape(event);
-//        draw();
-    }
-
     private void addNewShape(MouseEvent event) {
-//        switch (model.getShape()) {
-//            case CIRCLE -> model.shapes.add(Shapes.circleOf(model.getColor(), event.getX(), event.getY(), 10.0));
-//            case RECTANGLE ->  model.shapes.add(Shapes.rectangleOf(model.getColor(), event.getX(), event.getY(), 50.0, 20.0));
-//            case TRIANGLE -> model.shapes.add(Shapes.triangleOf(model.getColor(), event.getX(), event.getY()));
-//        }
+        switch (model.getShape()) {
+            case CIRCLE -> model.shapes.add(Shapes.circleOf(model.getColor(), event.getX(), event.getY(), 10.0));
+            case SQUARE ->  model.shapes.add(Shapes.squareOf(model.getColor(), event.getX(), event.getY(), 20.0));
+        }
     }
 
-    public void onCircleSelected(ActionEvent actionEvent) {
-        System.out.println(actionEvent);
+    public void onCircleSelected() {
+        model.setShape(ShapeOption.CIRCLE);
     }
 
-    public void canvasClicked(MouseEvent mouseEvent) {
-        System.out.println("on Canvas clicked!");
-
-        model.shapes.add(new Circle(model.getColor(), mouseEvent.getX(), mouseEvent.getY(), 10.0));
-        //addNewShape(event);
-        draw();
+    public void onSquareSelected() {
+        model.setShape(ShapeOption.SQUARE);
     }
 }
 

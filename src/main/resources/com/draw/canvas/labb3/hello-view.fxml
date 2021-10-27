@@ -23,7 +23,7 @@
     <ButtonBar prefHeight="40.0" prefWidth="100.0">
        <buttons>
          <Button mnemonicParsing="false" onAction="#onCircleSelected" text="Circle"   />
-         <Button mnemonicParsing="false" text="Square"   />
+         <Button mnemonicParsing="false" onAction="#onSquareSelected" text="Square"   />
          <Button mnemonicParsing="false" text="Button"   />
      </buttons>
    </ButtonBar>
