@@ -5,8 +5,8 @@
     -fx-background-color: pink;
 }
 
-ButtonBar {
-   -fx-padding: 40px;
+#colorLabel {
+    -fx-padding: 10px;
 }
 
 .root {

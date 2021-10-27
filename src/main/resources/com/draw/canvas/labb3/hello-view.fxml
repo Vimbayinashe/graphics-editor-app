@@ -5,42 +5,47 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.geometry.Insets?>
-<VBox prefHeight="600" prefWidth="800" spacing="5.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.draw.canvas.labb3.Controller">
+<VBox prefHeight="600" prefWidth="800" spacing="5.0" xmlns="http://javafx.com/javafx/11.0.2"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.draw.canvas.labb3.Controller">
     <MenuBar>
         <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" text="Action 1" />
-            <MenuItem mnemonicParsing="false" text="Action 2" />
-            <MenuItem mnemonicParsing="false" text="Action 3" />
+            <MenuItem mnemonicParsing="false" text="Action 1"/>
+            <MenuItem mnemonicParsing="false" text="Action 2"/>
+            <MenuItem mnemonicParsing="false" text="Action 3"/>
         </Menu>
         <Menu mnemonicParsing="false" text="Settings">
-            <MenuItem mnemonicParsing="false" text="Action 1" />
-            <MenuItem mnemonicParsing="false" text="Action 2" />
-            <MenuItem mnemonicParsing="false" text="Action 3" />
+            <MenuItem mnemonicParsing="false" text="Action 1"/>
+            <MenuItem mnemonicParsing="false" text="Action 2"/>
+            <MenuItem mnemonicParsing="false" text="Action 3"/>
         </Menu>
     </MenuBar>
 
-    <ButtonBar prefHeight="40.0" prefWidth="100.0">
-       <buttons>
-         <Button mnemonicParsing="false" onAction="#onCircleSelected" text="Circle"   />
-         <Button mnemonicParsing="false" onAction="#onSquareSelected" text="Square"   />
-         <Button mnemonicParsing="false" text="Button" />
-         <ColorPicker fx:id="colorPicker" />
-     </buttons>
-   </ButtonBar>
+    <HBox>
+        <ButtonBar prefHeight="40.0" prefWidth="800.0" maxWidth="900">
+            <buttons>
+                <Button mnemonicParsing="false" onAction="#drawCircle" text="Draw Circle"/>
+                <Button mnemonicParsing="false" onAction="#drawSquare" text="Draw Square"/>
+                <Button mnemonicParsing="false" onAction="#adjustSize" text="Adjust Size"/>
+                <Button mnemonicParsing="false" onAction="#editColor" text="Edit Color"/>
+            </buttons>
+        </ButtonBar>
+        <Label fx:id="colorLabel" text="       Color: " />
+        <ColorPicker fx:id="colorPicker"/>
+    </HBox>
 
-<!--  todo: use CSS styling to position StackPane-->
-<!--    <StackPane fx:id="canvasParent" prefHeight="600" prefWidth="600" maxWidth="1000" translateX="100"-->
-    <StackPane fx:id="canvasParent" prefHeight="400" prefWidth="400" maxWidth="800" maxHeight="600">
-<!--        <ResizableCanvas fx:id="canvas" onMouseClicked="#canvasClicked"/>-->
-        <Canvas fx:id="canvas" onMouseClicked="#canvasClicked" height="${canvas.parent.height}" width="${canvas.parent.width}"/>
+
+    <!--  todo: use CSS styling to position StackPane-->
+    <!--    <StackPane fx:id="canvasParent" prefHeight="600" prefWidth="600" maxWidth="1000" translateX="100"-->
+    <StackPane fx:id="canvasParent" maxHeight="600" maxWidth="800" prefHeight="400" prefWidth="400">
+        <!--        <ResizableCanvas fx:id="canvas" onMouseClicked="#canvasClicked"/>-->
+        <Canvas fx:id="canvas" height="${canvas.parent.height}" onMouseClicked="#canvasClicked"
+                width="${canvas.parent.width}"/>
     </StackPane>
 
-
     <stylesheets>
-        <URL value="@css/stylesheet.css" />
+        <URL value="@css/stylesheet.css"/>
     </stylesheets>
 
-<!-- move translateX, ButtonWidth & VBox dimension to a variable & divide by it -->
-<!-- or Align buttons to left using CSS -->
+    <!-- move translateX, ButtonWidth & VBox dimension to a variable & divide by it -->
+    <!-- or Align buttons to left using CSS -->
 </VBox>

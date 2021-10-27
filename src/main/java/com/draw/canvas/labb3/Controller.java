@@ -2,16 +2,19 @@ package com.draw.canvas.labb3;
 
 import com.draw.canvas.labb3.shapes.ShapeOption;
 import com.draw.canvas.labb3.shapes.Shapes;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 public class Controller {
 
 
+    public Label colorLabel;
     Model model;
 
     @FXML
@@ -38,6 +41,9 @@ public class Controller {
     }
 
     public void canvasClicked(MouseEvent event) {
+        //check if
+
+
         addNewShape(event);
         draw();
     }
@@ -73,12 +79,26 @@ public class Controller {
         return model.getSize() * model.getSizeRatio();
     }
 
-    public void onCircleSelected() {
+    public void drawCircle() {
         model.setShape(ShapeOption.CIRCLE);
     }
 
-    public void onSquareSelected() {
+    public void drawSquare() {
         model.setShape(ShapeOption.SQUARE);
+    }
+
+    public void adjustSize(ActionEvent actionEvent) {
+        //set all variables to false
+
+        //set isEditSize = true
+
+
+    }
+
+    public void editColor(ActionEvent actionEvent) {
+        //set all variables to false        //do the same for onCircleSelected & squareSelected
+
+        // set isEditColor = true
     }
 }
 
