@@ -15,9 +15,9 @@ public class Controller {
     Model model;
 
     @FXML
-    public Canvas canvas;
+    private Canvas canvas;
     @FXML
-    public StackPane canvasParent;
+    private StackPane canvasParent;
 
     public Controller() {}
 
@@ -28,16 +28,15 @@ public class Controller {
     public void initialize() {
         model = new Model();
 
-        //add canvas Listener to re-draw when 
-//        canvas.widthProperty().addListener(observable -> draw());
-//        canvas.heightProperty().addListener(observable -> draw());
+        //add canvas Listener to re-draw when re-sized
+        canvas.widthProperty().addListener(observable -> draw());
+        canvas.heightProperty().addListener(observable -> draw());
     }
 
     private void draw() {
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
 
         for (var shape : model.observableShapes) {
-            System.out.println(shape);
             shape.draw(graphicsContext);
         }
     }

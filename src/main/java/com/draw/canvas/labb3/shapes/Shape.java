@@ -47,6 +47,7 @@ public abstract class Shape {
     public  abstract void draw(GraphicsContext graphicsContext);
 
     public abstract boolean isInside(double x, double y);
+
 }
 
 
