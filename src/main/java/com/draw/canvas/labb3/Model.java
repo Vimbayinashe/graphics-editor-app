@@ -102,8 +102,9 @@ public class Model {
     public Optional<Shape> getSelectedShape(double x, double y) {
         return shapes.stream()
                 .filter(shape -> shape.isInside(x, y))
-                .min(Collections.reverseOrder());
+                .reduce((first, second) -> second);
     }
+
 
     //add getters & setters & property
 

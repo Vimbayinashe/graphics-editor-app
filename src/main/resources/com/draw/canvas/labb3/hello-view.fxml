@@ -36,7 +36,7 @@
 
     <!--  todo: use CSS styling to position StackPane-->
     <!--    <StackPane fx:id="canvasParent" prefHeight="600" prefWidth="600" maxWidth="1000" translateX="100"-->
-    <StackPane fx:id="canvasParent" maxHeight="600" maxWidth="800" prefHeight="400" prefWidth="400">
+    <StackPane fx:id="canvasParent" maxHeight="400" maxWidth="400" prefHeight="400" prefWidth="400">
         <!--        <ResizableCanvas fx:id="canvas" onMouseClicked="#canvasClicked"/>-->
         <Canvas fx:id="canvas" height="${canvas.parent.height}" onMouseClicked="#canvasClicked"
                 width="${canvas.parent.width}"/>

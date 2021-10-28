@@ -34,8 +34,8 @@ public class Square extends Shape {
         double graphicalX = getX() - length / 2;
         double graphicalY = getY() - length / 2;
 
-        boolean withinX = getX() <= x && x <= getX() + length;
-        boolean withinY = getY() <= y && y <= getY() + length;
+        boolean withinX = graphicalX <= x && x <= graphicalX + length;
+        boolean withinY = graphicalY <= y && y <= graphicalY + length;
 
         return withinX && withinY;
     }

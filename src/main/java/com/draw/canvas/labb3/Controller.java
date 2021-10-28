@@ -39,8 +39,8 @@ public class Controller {
         colorPicker.valueProperty().bindBidirectional(model.colorProperty());
 
         //add canvas Listener to re-draw when re-sized      //may not be necessary!
-        canvas.widthProperty().addListener(observable -> draw());
-        canvas.heightProperty().addListener(observable -> draw());
+//        canvas.widthProperty().addListener(observable -> draw());
+//        canvas.heightProperty().addListener(observable -> draw());
     }
 
     public void canvasClicked(MouseEvent event) {
