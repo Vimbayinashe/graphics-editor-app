@@ -35,11 +35,9 @@
 
 
     <!--  todo: use CSS styling to position StackPane-->
-    <!--    <StackPane fx:id="canvasParent" prefHeight="600" prefWidth="600" maxWidth="1000" translateX="100"-->
-    <StackPane fx:id="canvasParent" maxHeight="400" maxWidth="400" prefHeight="400" prefWidth="400">
-        <!--        <ResizableCanvas fx:id="canvas" onMouseClicked="#canvasClicked"/>-->
-        <Canvas fx:id="canvas" height="${canvas.parent.height}" onMouseClicked="#canvasClicked"
-                width="${canvas.parent.width}"/>
+
+    <StackPane fx:id="canvasParent" maxHeight="700" maxWidth="1150">
+        <Canvas fx:id="canvas" height="700" onMouseClicked="#canvasClicked" width="1150"/>
     </StackPane>
 
     <stylesheets>
@@ -49,3 +47,16 @@
     <!-- move translateX, ButtonWidth & VBox dimension to a variable & divide by it -->
     <!-- or Align buttons to left using CSS -->
 </VBox>
+
+
+
+
+
+
+
+
+
+
+
+
+        <!--    <StackPane fx:id="canvasParent" prefHeight="600" prefWidth="600" maxWidth="1000" translateX="100"-->

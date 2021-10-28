@@ -1,8 +1,8 @@
 #canvasParent {
-    -fx-border-color: lightblue;
+    -fx-border-color: midnightblue;
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
-    -fx-background-color: pink;
+    -fx-background-color: lightblue;
 }
 
 #colorLabel {
