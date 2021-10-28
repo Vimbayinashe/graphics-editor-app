@@ -18,6 +18,7 @@ public class Model {
 
     private final ObjectProperty<Color> color;
     private final ObjectProperty<ShapeOption> shape;
+    private final ObjectProperty<Action> action;
     private final DoubleProperty size;
     private final DoubleProperty sizeRatio;
 
@@ -26,6 +27,7 @@ public class Model {
     public Model() {
         this.color = new SimpleObjectProperty<>(Color.BLACK);
         this.shape = new SimpleObjectProperty<>(ShapeOption.CIRCLE);
+        this.action = new SimpleObjectProperty<>(Action.DRAWCIRCLE);
         this.size = new SimpleDoubleProperty(10.0);
         this.sizeRatio = new SimpleDoubleProperty(1.0);
     }
@@ -84,6 +86,18 @@ public class Model {
 
     public void setSizeRatio(double sizeRatio) {
         this.sizeRatio.set(sizeRatio);
+    }
+
+    public Action getAction() {
+        return action.get();
+    }
+
+    public ObjectProperty<Action> actionProperty() {
+        return action;
+    }
+
+    public void setAction(Action action) {
+        this.action.set(action);
     }
 
     //add getters & setters & property

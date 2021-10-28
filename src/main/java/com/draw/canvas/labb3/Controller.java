@@ -2,7 +2,6 @@ package com.draw.canvas.labb3;
 
 import com.draw.canvas.labb3.shapes.ShapeOption;
 import com.draw.canvas.labb3.shapes.Shapes;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -41,11 +40,28 @@ public class Controller {
     }
 
     public void canvasClicked(MouseEvent event) {
-        //check if
-
-
-        addNewShape(event);
+        performAction(event);
         draw();
+    }
+
+    private void performAction(MouseEvent event) {
+        switch (model.getAction()) {
+            case DRAWCIRCLE, DRAWSQUARE -> addNewShape(event);
+            case CHANGECOLOR -> changeShapeColor(event);
+            case CHANGESIZE -> changeShapeSize(event);
+        }
+    }
+
+    private void changeShapeSize(MouseEvent event) {
+
+    }
+
+    private void changeShapeColor(MouseEvent event) {
+        //filter for shapes isInside()
+        //reverse list direction
+        //findFirst match ifPresent
+
+        //set shape's color to new color
     }
 
     private void draw() {
@@ -67,12 +83,14 @@ public class Controller {
         model.shapes.add(Shapes.squareOf(model.getColor(), event.getX(), event.getY(), length()));
     }
 
-    private double length() {
-        return model.getSize() * model.getSizeRatio() * 2;
-    }
-
     private void addCircle(MouseEvent event) {
         model.shapes.add(Shapes.circleOf(model.getColor(), event.getX(), event.getY(), radius()));
+        //model.shapes.add(Circle.getBuilder().setColor(model.getColor()).setCoords(x, y).setRadius(radius()) =>
+        // returns a Shape object
+    }
+
+    private double length() {
+        return model.getSize() * model.getSizeRatio() * 2;
     }
 
     private double radius() {
@@ -80,30 +98,35 @@ public class Controller {
     }
 
     public void drawCircle() {
+        model.setAction(Action.DRAWCIRCLE);
         model.setShape(ShapeOption.CIRCLE);
     }
 
     public void drawSquare() {
+        model.setAction(Action.DRAWSQUARE);
         model.setShape(ShapeOption.SQUARE);
     }
 
-    public void adjustSize(ActionEvent actionEvent) {
-        //set all variables to false
-
-        //set isEditSize = true
-
-
+    public void changeSize() {
+        model.setAction(Action.CHANGESIZE);
     }
 
-    public void editColor(ActionEvent actionEvent) {
-        //set all variables to false        //do the same for onCircleSelected & squareSelected
-
-        // set isEditColor = true
+    public void changeColor() {
+        model.setAction(Action.CHANGECOLOR);
     }
+
+    //todo:
+
+    //1. use an enum to determine actions
+    //switch: case editColor ->  shape.setColor && shape.draw()
+
+    // case changeSize ->  shape.setX && shape.setY && shape.draw();   use drag functionality
+
 }
+
 
 //todo
 /*
 *  Shapes.of Factory class
-*  add size object to Model
+*
  */
