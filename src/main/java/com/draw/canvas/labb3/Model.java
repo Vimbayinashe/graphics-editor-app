@@ -10,11 +10,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 
+import java.util.Collections;
+import java.util.Optional;
+
 public class Model {
-
-    //color //shape //co-ords
-
-    //todo: a variable that holds ratio (size) of original shape size
 
     private final ObjectProperty<Color> color;
     private final ObjectProperty<ShapeOption> shape;
@@ -98,6 +97,12 @@ public class Model {
 
     public void setAction(Action action) {
         this.action.set(action);
+    }
+
+    public Optional<Shape> getSelectedShape(double x, double y) {
+        return shapes.stream()
+                .filter(shape -> shape.isInside(x, y))
+                .min(Collections.reverseOrder());
     }
 
     //add getters & setters & property

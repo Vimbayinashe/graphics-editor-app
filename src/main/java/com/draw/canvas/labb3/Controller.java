@@ -1,5 +1,6 @@
 package com.draw.canvas.labb3;
 
+import com.draw.canvas.labb3.shapes.Shape;
 import com.draw.canvas.labb3.shapes.ShapeOption;
 import com.draw.canvas.labb3.shapes.Shapes;
 import javafx.fxml.FXML;
@@ -9,6 +10,9 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+
+import java.util.Collections;
+import java.util.Optional;
 
 public class Controller {
 
@@ -57,11 +61,8 @@ public class Controller {
     }
 
     private void changeShapeColor(MouseEvent event) {
-        //filter for shapes isInside()
-        //reverse list direction
-        //findFirst match ifPresent
-
-        //set shape's color to new color
+        Optional<Shape> selectedShape = model.getSelectedShape(event.getX(), event.getY());
+        selectedShape.ifPresent(shape -> shape.setColor(model.getColor()));
     }
 
     private void draw() {
