@@ -18,10 +18,8 @@ public class Square extends Shape {
         return length;
     }
 
-    public Square setLength(double length) {
+    public void setLength(double length) {
         this.length = length;
-        //call draw here?   //NO -> single use policy, change length => call draw on shape
-        return this;
     }
 
     public void draw(GraphicsContext graphicsContext) {
@@ -38,6 +36,11 @@ public class Square extends Shape {
         boolean withinY = graphicalY <= y && y <= graphicalY + length;
 
         return withinX && withinY;
+    }
+
+    @Override
+    public void setDimensions(double length) {
+        this.length = length;
     }
 
 

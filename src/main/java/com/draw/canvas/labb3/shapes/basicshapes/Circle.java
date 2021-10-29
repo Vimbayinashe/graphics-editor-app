@@ -9,18 +9,17 @@ import java.util.Objects;
 public class Circle extends Shape {
     private double radius;
 
-    public Circle(Color color, double x, double y, double radius) {
+    public Circle(Color color, double x, double y, double length) {
         super(color, x, y);
-        this.radius = radius;
+        this.radius = length / 2;
     }
 
     public double getRadius() {
         return radius;
     }
 
-    // dropdown menu option to have x2, x3 , x0.5, x 0.75 of shape size
-    public void setRadius(double factor) {
-        this.radius *= factor;
+    public void setRadius(double radius) {
+        this.radius = radius;
     }
 
     public void draw(GraphicsContext graphicsContext) {
@@ -35,6 +34,11 @@ public class Circle extends Shape {
         double distanceFromCenterSquared = dx * dx + dy * dy;
 
         return distanceFromCenterSquared <= radius * radius;
+    }
+
+    @Override
+    public void setDimensions(double length) {
+        this.radius = length / 2;
     }
 
     @Override

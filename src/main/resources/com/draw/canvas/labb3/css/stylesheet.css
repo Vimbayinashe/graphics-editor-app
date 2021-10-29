@@ -5,7 +5,7 @@
     -fx-background-color: lightblue;
 }
 
-#colorLabel {
+Label {
     -fx-padding: 10px;
 }
 
