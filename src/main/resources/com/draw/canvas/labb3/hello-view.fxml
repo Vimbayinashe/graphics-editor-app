@@ -22,6 +22,11 @@
     </MenuBar>
 
     <HBox alignment="CENTER_LEFT" prefHeight="80.0">
+        <Button mnemonicParsing="false" onAction="#connectToServer" text="Connect to Server"/>
+        <Button mnemonicParsing="false" onAction="#disconnectFromServer" text="Disconnect"/>
+    </HBox>
+
+    <HBox alignment="CENTER_LEFT" prefHeight="80.0">
         <Label text="Action: " />
         <ButtonBar maxWidth="900" prefHeight="40.0" prefWidth="700.0">
             <buttons>

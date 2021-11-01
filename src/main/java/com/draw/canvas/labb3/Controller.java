@@ -3,13 +3,11 @@ package com.draw.canvas.labb3;
 import com.draw.canvas.labb3.shapes.Shape;
 import com.draw.canvas.labb3.shapes.ShapeOption;
 import com.draw.canvas.labb3.shapes.Shapes;
-import com.draw.canvas.labb3.shapes.basicshapes.Circle;
-import com.draw.canvas.labb3.shapes.basicshapes.Square;
-import javafx.beans.property.ObjectProperty;
+import javafx.collections.ListChangeListener;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
@@ -46,6 +44,10 @@ public class Controller {
         colorPicker.valueProperty().bindBidirectional(model.colorProperty());
         sizeSpinner.getValueFactory().valueProperty().bindBidirectional(model.sizeRatioProperty());
 
+        model.shapes.addListener((ListChangeListener<Shape>) change ->  {
+            draw();
+        });
+
         //add canvas Listener to re-draw when re-sized IF ResizableCanvas implemented
 //        canvas.widthProperty().addListener(observable -> draw());
 //        canvas.heightProperty().addListener(observable -> draw());
@@ -65,7 +67,6 @@ public class Controller {
     }
 
     private void changeShapeSize(MouseEvent event) {
-        System.out.println(length());
         Optional<Shape> selectedShape = model.getSelectedShape(event.getX(), event.getY());
         selectedShape.ifPresent(shape -> shape.setDimensions(length()));
 
@@ -99,18 +100,24 @@ public class Controller {
     }
 
     private void addNewShape(MouseEvent event) {
-        switch (model.getShape()) {
-            case CIRCLE -> addCircle(event);
-            case SQUARE -> addSquare(event);
-        }
+        Shape shape = getNewShape(event);
+        model.shapes.add(shape);
+        model.sendTosServer(shape);
     }
 
-    private void addSquare(MouseEvent event) {
-        model.shapes.add(Shapes.squareOf(model.getColor(), event.getX(), event.getY(), length()));
+    private Shape getNewShape(MouseEvent event) {
+        return switch (model.getShape()) {
+            case CIRCLE -> Shapes.circleOf(model.getColor(), event.getX(), event.getY(), length());
+            case SQUARE -> Shapes.squareOf(model.getColor(), event.getX(), event.getY(), length());
+        };
     }
 
-    private void addCircle(MouseEvent event) {
-        model.shapes.add(Shapes.circleOf(model.getColor(), event.getX(), event.getY(), length()));
+    private Shape createSquare(MouseEvent event) {
+        return Shapes.squareOf(model.getColor(), event.getX(), event.getY(), length());
+    }
+
+    private Shape createCircle(MouseEvent event) {
+        return Shapes.circleOf(model.getColor(), event.getX(), event.getY(), length());
     }
 
     private double length() {
@@ -133,6 +140,14 @@ public class Controller {
 
     public void changeColor() {
         model.setAction(Action.CHANGECOLOR);
+    }
+
+    public void connectToServer(ActionEvent actionEvent) {
+        model.connect();
+    }
+
+    public void disconnectFromServer(ActionEvent actionEvent) {
+        model.disconnect();
     }
 
     //todo:
