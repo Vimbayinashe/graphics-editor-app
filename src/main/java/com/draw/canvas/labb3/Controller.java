@@ -31,6 +31,8 @@ public class Controller {
     @FXML
     private ColorPicker colorPicker;
 
+    private GraphicsContext graphicsContext;
+
     public Controller() {}
 
     public Controller(Model model) {
@@ -43,6 +45,8 @@ public class Controller {
 
         colorPicker.valueProperty().bindBidirectional(model.colorProperty());
         sizeSpinner.getValueFactory().valueProperty().bindBidirectional(model.sizeRatioProperty());
+
+        graphicsContext = canvas.getGraphicsContext2D();
 
         model.shapes.addListener((ListChangeListener<Shape>) change ->  {
             draw();
@@ -86,13 +90,8 @@ public class Controller {
     }
 
     private void draw() {
-
-        //re-draw smaller shapes a) return gc here & reset it before each re-drawing; b) clear "global" gc declared in Controller
-        //How to clear graphicsContext?
-
-        //add event listener to re-draw canvas when any shape's fields in model.shapes changes???
-
-        GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
+        
+        graphicsContext.clearRect(0 , 0, canvas.getWidth(), canvas.getHeight());
 
         for (var shape : model.shapes) {
             shape.draw(graphicsContext);
