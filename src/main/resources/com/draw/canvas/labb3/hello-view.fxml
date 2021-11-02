@@ -16,7 +16,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
 
-            <MenuItem fx:id="undoMenuItem" mnemonicParsing="false" text="Undo" onAction="#undo"/>
+            <MenuItem mnemonicParsing="false" text="Undo" onAction="#undo"/>
             <MenuItem mnemonicParsing="false" text="Redo" onAction="#redo"/>
             <MenuItem mnemonicParsing="false" text="Action 3"/>
         </Menu>
@@ -41,13 +41,13 @@
     </HBox>
 
     <HBox alignment="CENTER_LEFT" prefHeight="80.0">
-        <Label fx:id="colorLabel" text="Color: "/>
+        <Label text="Color: "/>
         <ColorPicker fx:id="colorPicker"/>
-        <Label fx:id="sizeLabel" text="Size: "/>
+        <Label text="Size: "/>
         <Spinner fx:id="sizeSpinner" min="0.5" initialValue="1.0" amountToStepBy="0.5" max="10.0"/>
     </HBox>
 
-    <StackPane fx:id="canvasParent" maxHeight="700" maxWidth="1150">
+    <StackPane maxHeight="700" maxWidth="1150">
         <Canvas fx:id="canvas" height="700" onMouseClicked="#canvasClicked" width="1150"/>
     </StackPane>
 

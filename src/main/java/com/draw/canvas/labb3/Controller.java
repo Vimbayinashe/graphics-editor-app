@@ -4,43 +4,33 @@ import com.draw.canvas.labb3.shapes.Shape;
 import com.draw.canvas.labb3.shapes.ShapeOption;
 import com.draw.canvas.labb3.shapes.Shapes;
 import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.Spinner;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 
 import java.util.Optional;
 
 public class Controller {
 
+    private Model model;
+    private GraphicsContext graphicsContext;
 
-    public Spinner<Double> sizeSpinner;
-    public Label sizeLabel;
-    public Label colorLabel;
-    public MenuItem undoMenuItem;
-    Model model;
-
+    @FXML
+    private Spinner<Double> sizeSpinner;
     @FXML
     private Canvas canvas;
     @FXML
-    private StackPane canvasParent;
-    @FXML
     private ColorPicker colorPicker;
 
-    private GraphicsContext graphicsContext;
 
     public Controller() {}
 
     public Controller(Model model) {
         this.model = model;
     }
-
 
     public void initialize() {
         model = new Model();
@@ -110,14 +100,6 @@ public class Controller {
         };
     }
 
-    private Shape createSquare(MouseEvent event) {
-        return Shapes.squareOf(model.getColor(), event.getX(), event.getY(), length());
-    }
-
-    private Shape createCircle(MouseEvent event) {
-        return Shapes.circleOf(model.getColor(), event.getX(), event.getY(), length());
-    }
-
     private double length() {
         return model.getSize() * model.getSizeRatio();
     }
@@ -140,11 +122,11 @@ public class Controller {
         model.setAction(Action.CHANGECOLOR);
     }
 
-    public void connectToServer(ActionEvent actionEvent) {
+    public void connectToServer() {
         model.connect();
     }
 
-    public void disconnectFromServer(ActionEvent actionEvent) {
+    public void disconnectFromServer() {
         model.disconnect();
     }
 
