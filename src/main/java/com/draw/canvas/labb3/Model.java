@@ -22,7 +22,8 @@ public class Model {
     private final ObjectProperty<Action> action;
     private final DoubleProperty size;
     private final ObjectProperty<Double> sizeRatio;
-    private final Deque<List<Shape>> status = new ArrayDeque<>();
+    private final Deque<List<Shape>> undoList = new ArrayDeque<>();
+    private final Deque<List<Shape>> redoList = new ArrayDeque<>();
 
     ObservableList<Shape> shapes = FXCollections.observableArrayList();
 
@@ -69,15 +70,28 @@ public class Model {
     }
 
     public void saveCurrentStatus() {
-        status.addLast(getShapes());
+        undoList.addLast(getShapes());
+        redoList.clear();
     }
 
     public void undo() {
-        if (status.isEmpty())
+        if (undoList.isEmpty())
             return;
 
-        List<Shape> previousStatus = status.removeLast();
-        setShapes(previousStatus);
+        redoList.addLast(getShapes());
+
+        List<Shape> previousState = undoList.removeLast();
+        setShapes(previousState);
+    }
+
+    public void redo() {
+        if (redoList.isEmpty())
+            return;
+
+        undoList.addLast(getShapes());
+
+        List<Shape> redoState = redoList.removeLast();
+        setShapes(redoState);
     }
 
     public void addShape(Shape shape) {

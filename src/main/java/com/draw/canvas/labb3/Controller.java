@@ -153,12 +153,9 @@ public class Controller {
         draw();
     }
 
-    public void redo(ActionEvent actionEvent) {
-        //take one step forward in model.shapes & re-draw
-
-        //requires a List that stores different states of undo / redo       //should it have a min of 5
-
-        //add current state of shapes to deque  -> add new shape to store
+    public void redo() {
+        model.redo();
+        draw();
     }
 
 
