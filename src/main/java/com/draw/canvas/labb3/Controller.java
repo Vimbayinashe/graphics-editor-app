@@ -10,6 +10,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Spinner;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -22,6 +23,7 @@ public class Controller {
     public Spinner<Double> sizeSpinner;
     public Label sizeLabel;
     public Label colorLabel;
+    public MenuItem undoMenuItem;
     Model model;
 
     @FXML
@@ -45,6 +47,9 @@ public class Controller {
 
         colorPicker.valueProperty().bindBidirectional(model.colorProperty());
         sizeSpinner.getValueFactory().valueProperty().bindBidirectional(model.sizeRatioProperty());
+
+        //undoMenuItem.setDisable(model.statusIsEmpty());
+        //undoMenuItem.disableProperty().bind(model.statusIsEmpty());
 
         graphicsContext = canvas.getGraphicsContext2D();
 
@@ -90,7 +95,7 @@ public class Controller {
     }
 
     private void draw() {
-        
+
         graphicsContext.clearRect(0 , 0, canvas.getWidth(), canvas.getHeight());
 
         for (var shape : model.shapes) {
@@ -100,12 +105,14 @@ public class Controller {
 
     private void addNewShape(MouseEvent event) {
         Shape shape = getNewShape(event);
+
+        model.saveCurrentStatus();
         model.shapes.add(shape);
         model.sendTosServer(shape);
     }
 
     private Shape getNewShape(MouseEvent event) {
-        return switch (model.getShape()) {
+        return switch (model.getShapeOption()) {
             case CIRCLE -> Shapes.circleOf(model.getColor(), event.getX(), event.getY(), length());
             case SQUARE -> Shapes.squareOf(model.getColor(), event.getX(), event.getY(), length());
         };
@@ -125,12 +132,12 @@ public class Controller {
 
     public void drawCircle() {
         model.setAction(Action.DRAWCIRCLE);
-        model.setShape(ShapeOption.CIRCLE);
+        model.setShapeOption(ShapeOption.CIRCLE);
     }
 
     public void drawSquare() {
         model.setAction(Action.DRAWSQUARE);
-        model.setShape(ShapeOption.SQUARE);
+        model.setShapeOption(ShapeOption.SQUARE);
     }
 
     public void changeSize() {
@@ -149,19 +156,28 @@ public class Controller {
         model.disconnect();
     }
 
-    //todo:
+    public void undo() {
+        model.undo();
+        draw();
+    }
 
-    //1. use an enum to determine actions
-    //switch: case editColor ->  shape.setColor && shape.draw()
+    public void redo(ActionEvent actionEvent) {
+        //take one step forward in model.shapes & re-draw
 
-    // case changeSize ->  shape.setX && shape.setY && shape.draw();   use drag functionality
+        //requires a List that stores different states of undo / redo       //should it have a min of 5
+
+        //add current state of shapes to deque  -> add new shape to store
+    }
+
+
 
 }
 
 
-//todo maybe
+//todo: maybe
 /*
 *  Shapes Builder
 *  model.shapes.add(Circle.getBuilder().setColor(model.getColor()).setCoords(x, y).setRadius(radius()) => returns a Shape object
 *
+*  disable Undo button when model.status.isEmpty(),     // requires a SimpleBooleanProperty
  */

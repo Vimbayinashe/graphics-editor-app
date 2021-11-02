@@ -11,10 +11,7 @@ import javafx.scene.paint.Color;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -25,6 +22,7 @@ public class Model {
     private final ObjectProperty<Action> action;
     private final DoubleProperty size;
     private final ObjectProperty<Double> sizeRatio;
+    private final Deque<List<Shape>> status = new ArrayDeque<>();
 
     ObservableList<Shape> shapes = FXCollections.observableArrayList();
 
@@ -48,23 +46,39 @@ public class Model {
         this.color.set(color);
     }
 
-    public ShapeOption getShape() {
+    public ShapeOption getShapeOption() {
         return shape.get();
     }
 
-    public ObjectProperty<ShapeOption> shapeProperty() {
+    public ObjectProperty<ShapeOption> shapeOptionProperty() {
         return shape;
     }
 
-    public void setShape(ShapeOption shape) {
+    public void setShapeOption(ShapeOption shape) {
         this.shape.set(shape);
     }
 
-    public ObservableList<Shape> getShapes() {
-        return shapes;
+    public List<Shape> getShapes() {
+        return shapes.stream().toList();
     }
 
-    public void setShapes(Shape shape) {
+    public void setShapes(List<Shape> shapes) {
+        this.shapes = FXCollections.observableArrayList(shapes);      //todo: do I need new arrayList here?
+    }
+
+    public void saveCurrentStatus() {
+        status.addLast(getShapes());
+    }
+
+    public void undo() {
+        if (status.isEmpty())
+            return;
+
+        List<Shape> previousStatus = status.removeLast();
+        setShapes(previousStatus);
+    }
+
+    public void addShape(Shape shape) {
         shapes.add(shape);
     }
 
@@ -109,6 +123,8 @@ public class Model {
                 .filter(shape -> shape.isInside(x, y))
                 .reduce((first, second) -> second);
     }
+
+
 
     private Socket socket;
     private PrintWriter writer;         //

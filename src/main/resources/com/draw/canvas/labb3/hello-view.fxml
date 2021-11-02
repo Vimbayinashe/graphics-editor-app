@@ -10,13 +10,14 @@
 
     <MenuBar>
         <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" text="Action 1"/>
+            <MenuItem mnemonicParsing="false" text="Save"/>
             <MenuItem mnemonicParsing="false" text="Action 2"/>
-            <MenuItem mnemonicParsing="false" text="Action 3"/>
+            <MenuItem mnemonicParsing="false" text="Exit"/>
         </Menu>
-        <Menu mnemonicParsing="false" text="Settings">
-            <MenuItem mnemonicParsing="false" text="Action 1"/>
-            <MenuItem mnemonicParsing="false" text="Action 2"/>
+        <Menu mnemonicParsing="false" text="Edit">
+
+            <MenuItem fx:id="undoMenuItem" mnemonicParsing="false" text="Undo" onAction="#undo"/>
+            <MenuItem mnemonicParsing="false" text="Redo" onAction="#redo"/>
             <MenuItem mnemonicParsing="false" text="Action 3"/>
         </Menu>
     </MenuBar>
