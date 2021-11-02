@@ -80,16 +80,6 @@ public class Controller {
     private void changeShapeSize(MouseEvent event) {
         Optional<Shape> selectedShape = model.getSelectedShape(event.getX(), event.getY());
         selectedShape.ifPresent(shape -> shape.setDimensions(length()));
-        //selectedShape.ifPresent(shape -> Shapes.circleOf(model.getColor(), event.getX(), event.getY(), length()));
-
-//        selectedShape.ifPresent(shape -> {
-//            shape.setDimensions(length());
-//
-//            if(shape instanceof Circle)
-//                System.out.println("Length: " + ((Circle) shape).getRadius());
-//            if(shape instanceof Square)
-//                System.out.println("Length: " + ((Square) shape).getLength());
-//        });
     }
 
     private void changeShapeColor(MouseEvent event) {

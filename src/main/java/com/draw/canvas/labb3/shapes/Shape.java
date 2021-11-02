@@ -42,7 +42,7 @@ public abstract class Shape {
 
     public abstract boolean isInside(double x, double y);
 
-    public abstract Shape setDimensions(double factor);
+    public abstract void setDimensions(double factor);
 
 }
 

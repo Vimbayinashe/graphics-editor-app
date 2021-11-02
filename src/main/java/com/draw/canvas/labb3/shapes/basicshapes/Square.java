@@ -38,9 +38,8 @@ public class Square extends Shape {
     }
 
     @Override
-    public Shape setDimensions(double length) {
+    public void setDimensions(double length) {
         setLength(length);
-        return new Square(getColor(), getX(), getY(), length);
     }
 
 

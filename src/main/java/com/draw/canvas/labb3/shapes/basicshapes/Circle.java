@@ -37,9 +37,8 @@ public class Circle extends Shape {
     }
 
     @Override
-    public Shape setDimensions(double length) {
+    public void setDimensions(double length) {
         setRadius(length);
-        return new Circle(getColor(), getX(), getY(), length);
     }
 
     @Override
