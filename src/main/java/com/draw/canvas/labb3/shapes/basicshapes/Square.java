@@ -60,6 +60,9 @@ public class Square extends Shape {
     @Override
     public String toString() {
         return "Square{" +
+                "x=" + getX() +
+                ", y=" + getY() +
+                ", color=" + getColor() +
                 "length=" + length +
                 '}';
     }

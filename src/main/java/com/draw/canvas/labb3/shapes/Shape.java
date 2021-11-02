@@ -3,6 +3,8 @@ package com.draw.canvas.labb3.shapes;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.Objects;
+
 public abstract class Shape {
     private double x;
     private double y;
@@ -44,5 +46,26 @@ public abstract class Shape {
 
     public abstract void setDimensions(double factor);
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Shape shape = (Shape) o;
+        return Double.compare(shape.x, x) == 0 && Double.compare(shape.y, y) == 0 && Objects.equals(color, shape.color);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, color);
+    }
+
+    @Override
+    public String toString() {
+        return "Shape{" +
+                "x=" + x +
+                ", y=" + y +
+                ", color=" + color +
+                '}';
+    }
 }
 

@@ -58,6 +58,9 @@ public class Circle extends Shape {
     @Override
     public String toString() {
         return "Circle{" +
+                "x=" + getX() +
+                ", y=" + getY() +
+                ", color=" + getColor() +
                 "radius=" + radius +
                 '}';
     }
