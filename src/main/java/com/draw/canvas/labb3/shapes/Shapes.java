@@ -13,4 +13,15 @@ public class Shapes {
         return  new Square(color, x, y, length);
     }
 
+    public static Shape copyOf(Shape shape) {
+
+        if(shape instanceof Circle)
+            return new Circle(shape.getColor(), shape.getX(), shape.getY(), ((Circle) shape).getRadius() * 2);
+        else if(shape instanceof Square)
+            return new Square(shape.getColor(), shape.getX(), shape.getY(), ((Square) shape).getLength());
+
+        // can default Shape be avoided?
+        return new Circle(Color.BLACK, 0, 0, 20);
+    }
+
 }

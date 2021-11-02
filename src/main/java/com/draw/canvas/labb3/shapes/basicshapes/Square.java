@@ -27,7 +27,6 @@ public class Square extends Shape {
         graphicsContext.fillRect(getX() - length / 2, getY() - length / 2, length, length);
     }
 
-    //todo
     public boolean isInside(double x, double y) {
         double graphicalX = getX() - length / 2;
         double graphicalY = getY() - length / 2;
@@ -39,8 +38,9 @@ public class Square extends Shape {
     }
 
     @Override
-    public void setDimensions(double length) {
-        this.length = length;
+    public Shape setDimensions(double length) {
+        setLength(length);
+        return new Square(getColor(), getX(), getY(), length);
     }
 
 

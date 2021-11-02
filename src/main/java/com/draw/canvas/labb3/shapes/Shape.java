@@ -3,16 +3,10 @@ package com.draw.canvas.labb3.shapes;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.util.Objects;
-
 public abstract class Shape {
     private double x;
     private double y;
     private Color color;
-    // shapeOption ?
-
-    //abstract methods to be implemented in subclasses?
-
 
     public Shape(Color color, double x, double y) {
         this.x = x;
@@ -48,9 +42,7 @@ public abstract class Shape {
 
     public abstract boolean isInside(double x, double y);
 
-    public abstract void setDimensions(double factor);
+    public abstract Shape setDimensions(double factor);
 
 }
 
-
-// size is determined by co-ordinates

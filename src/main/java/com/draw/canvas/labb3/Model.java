@@ -59,7 +59,9 @@ public class Model {
     }
 
     public List<Shape> getShapes() {
-        return shapes.stream().toList();
+        return shapes.stream()
+                .map(Shapes::copyOf)
+                .toList();
     }
 
     public void setShapes(List<Shape> shapes) {

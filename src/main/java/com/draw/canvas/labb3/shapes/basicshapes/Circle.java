@@ -18,8 +18,8 @@ public class Circle extends Shape {
         return radius;
     }
 
-    public void setRadius(double radius) {
-        this.radius = radius;
+    public void setRadius(double length) {
+        radius = length / 2;
     }
 
     public void draw(GraphicsContext graphicsContext) {
@@ -37,8 +37,9 @@ public class Circle extends Shape {
     }
 
     @Override
-    public void setDimensions(double length) {
-        this.radius = length / 2;
+    public Shape setDimensions(double length) {
+        setRadius(length);
+        return new Circle(getColor(), getX(), getY(), length);
     }
 
     @Override

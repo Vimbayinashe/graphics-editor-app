@@ -68,6 +68,8 @@ public class Controller {
     }
 
     private void performAction(MouseEvent event) {
+        model.saveCurrentStatus();
+
         switch (model.getAction()) {
             case DRAWCIRCLE, DRAWSQUARE -> addNewShape(event);
             case CHANGECOLOR -> changeShapeColor(event);
@@ -78,6 +80,7 @@ public class Controller {
     private void changeShapeSize(MouseEvent event) {
         Optional<Shape> selectedShape = model.getSelectedShape(event.getX(), event.getY());
         selectedShape.ifPresent(shape -> shape.setDimensions(length()));
+        //selectedShape.ifPresent(shape -> Shapes.circleOf(model.getColor(), event.getX(), event.getY(), length()));
 
 //        selectedShape.ifPresent(shape -> {
 //            shape.setDimensions(length());
@@ -106,7 +109,6 @@ public class Controller {
     private void addNewShape(MouseEvent event) {
         Shape shape = getNewShape(event);
 
-        model.saveCurrentStatus();
         model.shapes.add(shape);
         model.sendTosServer(shape);
     }
