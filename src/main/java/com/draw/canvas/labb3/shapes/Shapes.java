@@ -27,7 +27,7 @@ public class Shapes {
     }
 
     public static String toSvg(Shape shape) {
-         if (shape instanceof Circle) {
+        if (shape instanceof Circle) {
             return svgCircle(shape).toString();
         } else
             return svgSquare(shape).toString();

@@ -5,55 +5,53 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <VBox prefHeight="600" prefWidth="800" spacing="5.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.draw.canvas.labb3.Controller">
 
     <MenuBar>
         <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" text="Save"/>
-            <MenuItem mnemonicParsing="false" text="Action 2"/>
-            <MenuItem mnemonicParsing="false" text="Exit"/>
+            <MenuItem mnemonicParsing="false" text="Save" />
+            <MenuItem mnemonicParsing="false" text="Action 2" />
+            <MenuItem mnemonicParsing="false" text="Exit" />
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
 
-            <MenuItem mnemonicParsing="false" text="Undo" onAction="#undo"/>
-            <MenuItem mnemonicParsing="false" text="Redo" onAction="#redo"/>
-            <MenuItem mnemonicParsing="false" text="Action 3"/>
+            <MenuItem mnemonicParsing="false" onAction="#undo" text="Undo" />
+            <MenuItem mnemonicParsing="false" onAction="#redo" text="Redo" />
+            <MenuItem mnemonicParsing="false" text="Action 3" />
         </Menu>
     </MenuBar>
 
     <HBox alignment="CENTER_LEFT" prefHeight="80.0">
-        <Button mnemonicParsing="false" onAction="#connectToServer" text="Connect to Server"/>
-        <Button mnemonicParsing="false" onAction="#disconnectFromServer" text="Disconnect"/>
+        <Button mnemonicParsing="false" onAction="#connectToServer" text="Connect to Server" />
+        <Button mnemonicParsing="false" onAction="#disconnectFromServer" text="Disconnect" />
     </HBox>
 
     <HBox alignment="CENTER_LEFT" prefHeight="80.0">
         <Label text="Action: " />
         <ButtonBar maxWidth="900" prefHeight="40.0" prefWidth="700.0">
             <buttons>
-                <Button mnemonicParsing="false" onAction="#drawCircle" text="Draw Circle"/>
-                <Button mnemonicParsing="false" onAction="#drawSquare" text="Draw Square"/>
-                <Button mnemonicParsing="false" onAction="#changeSize" text="Change Size"/>
-                <Button mnemonicParsing="false" onAction="#changeColor" text="Change Color"/>
+                <Button mnemonicParsing="false" onAction="#drawCircle" text="Draw Circle" />
+                <Button mnemonicParsing="false" onAction="#drawSquare" text="Draw Square" />
+                <Button mnemonicParsing="false" onAction="#changeSize" text="Change Size" />
+                <Button mnemonicParsing="false" onAction="#changeColor" text="Change Color" />
             </buttons>
         </ButtonBar>
 
     </HBox>
 
     <HBox alignment="CENTER_LEFT" prefHeight="80.0">
-        <Label text="Color: "/>
-        <ColorPicker fx:id="colorPicker"/>
-        <Label text="Size: "/>
-        <Spinner fx:id="sizeSpinner" min="0.5" initialValue="1.0" amountToStepBy="0.5" max="10.0"/>
+        <Label text="Color: " />
+        <ColorPicker fx:id="colorPicker" />
+        <Label text="Size: " />
+        <Spinner fx:id="sizeSpinner" amountToStepBy="0.5" initialValue="1.0" max="10.0" min="0.5" />
     </HBox>
 
     <StackPane fx:id="canvasParent" maxHeight="700" maxWidth="1150">
-        <Canvas fx:id="canvas" height="700" onMouseClicked="#canvasClicked" width="1150"/>
+        <Canvas fx:id="canvas" height="700" onMouseClicked="#canvasClicked" width="1150" />
     </StackPane>
 
     <stylesheets>
-        <URL value="@css/stylesheet.css"/>
+        <URL value="@css/stylesheet.css" />
     </stylesheets>
 
 </VBox>
-

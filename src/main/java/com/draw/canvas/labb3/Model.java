@@ -24,8 +24,13 @@ public class Model {
     private final ObjectProperty<Double> sizeRatio;
     private final Deque<List<Shape>> undoList = new ArrayDeque<>();
     private final Deque<List<Shape>> redoList = new ArrayDeque<>();
-
     ObservableList<Shape> shapes = FXCollections.observableArrayList();
+    private Socket socket;
+    private PrintWriter writer;
+    private BufferedReader reader;
+    public BooleanProperty connected = new SimpleBooleanProperty();
+    private ExecutorService executorService;
+
 
     public Model() {
         this.color = new SimpleObjectProperty<>(Color.BLACK);
@@ -77,7 +82,6 @@ public class Model {
     public void undo() {
         if (undoList.isEmpty())
             return;
-
         redoList.addLast(getShapes());
 
         List<Shape> previousState = undoList.removeLast();
@@ -87,7 +91,6 @@ public class Model {
     public void redo() {
         if (redoList.isEmpty())
             return;
-
         undoList.addLast(getShapes());
 
         List<Shape> redoState = redoList.removeLast();
@@ -140,13 +143,6 @@ public class Model {
                 .reduce((first, second) -> second);
     }
 
-
-    private Socket socket;
-    private PrintWriter writer;         //
-    private BufferedReader reader;      //reads from server
-    public BooleanProperty connected = new SimpleBooleanProperty();
-    ExecutorService executorService;
-
     public void connect() {
         try {
             socket = new Socket("192.168.1.137", 8000);
@@ -159,23 +155,12 @@ public class Model {
             connected.set(true);
             System.out.println("Connected to server on port 8000");
 
-            //write to console
-            // update shapes in model & re-draw canvas
-            // send information to server
+            //todo: send information to server a) here b)  Controller (where sendToServer is called)
+
+            //    -> a new variable called newShape ? =>
 
             executorService = Executors.newSingleThreadExecutor();  //use factory thread object; re-usable (threads use up lot of memory)
             executorService.submit(this::incomingNetworkHandler);
-
-            /*
-            new Thread(() -> {
-                while (true) {
-                    String line = reader.readLine();    // reads a line of text
-                    System.out.println(line);
-                }
-            });
-
-             */
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -185,23 +170,24 @@ public class Model {
         try {
             while (true) {
                 String line = reader.readLine();
-                System.out.println(line);
+                System.out.println(line);       //remove
 
-                //parse incoming shape SVG format -> Shape object
-                //shapes.add(parsedShape)
-
-                //avoid interfering with JavaFX GUI thread in the separate ExecutorService here => use Platform.runLater
-                //  ->  sends to JavaFX Platform Thread queue   todo: (add Notes to other file)
-
-                //add Exception handling for x, y , color, radius (double values)
                 Platform.runLater(() ->
+                        //parse incoming shape SVG format -> Shape object
+                        //shapes.add(parsedShape)
+                        //add Exception handling for x, y , color, radius (double values)
+
+                        // update shapes in model & re-draw canvas
                         shapes.add(Shapes.circleOf(Color.BLUEVIOLET, Math.random() * 800, Math.random() * 600, 20.0))  //dummy data
+
+                        //avoid re-writing your own shapes [YOU] OR only write shapes once message received from server for all users
+                        // => remove all shapes signed [you] from server
                 );
 
             }
         } catch (IOException e) {
             System.out.println("Disconnected from server - I/O Error");
-            Platform.runLater(() -> connected.set(false));  //because connected to GUI
+            Platform.runLater(() -> connected.set(false));
 
         }
     }
@@ -241,6 +227,8 @@ public class Model {
                     <svg viewBox="0 0 1150 700" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
                 """;
         String closingTag = "</svg>";
+
+
 
     }
 }

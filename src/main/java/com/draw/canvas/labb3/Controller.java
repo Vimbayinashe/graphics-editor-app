@@ -13,11 +13,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Controller {
 
     private Model model;
     private GraphicsContext graphicsContext;
+    private ExecutorService executorService;
 
     @FXML
     private Spinner<Double> sizeSpinner;
@@ -37,6 +40,8 @@ public class Controller {
 
     public void initialize() {
         model = new Model();
+        graphicsContext = canvas.getGraphicsContext2D();
+        executorService = Executors.newSingleThreadExecutor();
 
         colorPicker.valueProperty().bindBidirectional(model.colorProperty());
         sizeSpinner.getValueFactory().valueProperty().bindBidirectional(model.sizeRatioProperty());
@@ -44,7 +49,6 @@ public class Controller {
         //undoMenuItem.setDisable(model.statusIsEmpty());
         //undoMenuItem.disableProperty().bind(model.statusIsEmpty());
 
-        graphicsContext = canvas.getGraphicsContext2D();
 
         model.shapes.addListener((ListChangeListener<Shape>) change ->  {
             draw();
@@ -94,7 +98,10 @@ public class Controller {
         Shape shape = getNewShape(event);
 
         model.shapes.add(shape);
-        model.sendToServer(shape);
+
+        //todo: check if this is correct?
+        executorService.submit(() -> model.sendToServer(shape));
+        //model.sendToServer(shape);
     }
 
     private Shape getNewShape(MouseEvent event) {
