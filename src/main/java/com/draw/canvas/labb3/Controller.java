@@ -10,6 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 
 import java.util.Optional;
 
@@ -24,6 +25,8 @@ public class Controller {
     private Canvas canvas;
     @FXML
     private ColorPicker colorPicker;
+    @FXML
+    private StackPane canvasParent;
 
 
     public Controller() {}
@@ -75,6 +78,7 @@ public class Controller {
     private void changeShapeColor(MouseEvent event) {
         Optional<Shape> selectedShape = model.getSelectedShape(event.getX(), event.getY());
         selectedShape.ifPresent(shape -> shape.setColor(model.getColor()));
+        System.out.println(model.getColor());
     }
 
     private void draw() {
@@ -90,7 +94,7 @@ public class Controller {
         Shape shape = getNewShape(event);
 
         model.shapes.add(shape);
-        model.sendTosServer(shape);
+        model.sendToServer(shape);
     }
 
     private Shape getNewShape(MouseEvent event) {

@@ -141,7 +141,6 @@ public class Model {
     }
 
 
-
     private Socket socket;
     private PrintWriter writer;         //
     private BufferedReader reader;      //reads from server
@@ -149,7 +148,7 @@ public class Model {
     ExecutorService executorService;
 
     public void connect() {
-        try{
+        try {
             socket = new Socket("192.168.1.137", 8000);
             OutputStream output = socket.getOutputStream();
             writer = new PrintWriter(output, true);
@@ -191,15 +190,13 @@ public class Model {
                 //parse incoming shape SVG format -> Shape object
                 //shapes.add(parsedShape)
 
-                //avoid interfering with JavaFX GUI thread in the separate ExecutorService here => use Platform .runLater
+                //avoid interfering with JavaFX GUI thread in the separate ExecutorService here => use Platform.runLater
                 //  ->  sends to JavaFX Platform Thread queue   todo: (add Notes to other file)
 
-                //add fException handling for x, y , color, radius (double values)
+                //add Exception handling for x, y , color, radius (double values)
                 Platform.runLater(() ->
-                        shapes.add(Shapes.circleOf(Color.BLUEVIOLET, Math.random() * 800, Math.random() * 600,20.0))  //dummy data
+                        shapes.add(Shapes.circleOf(Color.BLUEVIOLET, Math.random() * 800, Math.random() * 600, 20.0))  //dummy data
                 );
-
-                //todo: why am I creating two new shapes for each click?
 
             }
         } catch (IOException e) {
@@ -209,7 +206,7 @@ public class Model {
         }
     }
 
-    public void disconnect() {      //Add a disconnect from server button
+    public void disconnect() {
         try {
             socket.close();
             connected.set(false);
@@ -220,23 +217,30 @@ public class Model {
     }
 
     //add separate executor service for "sendToServer" -> avoid lag experience
-    public void sendTosServer(Shape shape) {
-        if(connected.get()) {
-            writer.println("Created a new shape with co-ords, x: " + shape.getX() + ", y: " + shape.getY());
-            //send svg format
+    public void sendToServer(Shape shape) {
+        if (connected.get()) {
+            writer.println(Shapes.toSvg(shape));
         }
     }
 
 
     /*
-    * send shapes between server & client via svg format
-    * reconvert to Shape object & vice versa
-    *
-    * avoid re-writing your own shapes [YOU] OR only write shapes once message received from server for all users
+     * send shapes between server & client via svg format
+     * reconvert to Shape object & vice versa
+     *
+     * avoid re-writing your own shapes [YOU] OR only write shapes once message received from server for all users
      */
 
 
     //add getters & setters & property
 
     //test drawing & saving shape object  -> compare with classwork first
+
+    public void save() {
+        String openingTag = """
+                    <svg viewBox="0 0 1150 700" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
+                """;
+        String closingTag = "</svg>";
+
+    }
 }

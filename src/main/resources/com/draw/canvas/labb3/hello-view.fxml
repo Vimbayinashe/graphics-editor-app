@@ -47,7 +47,7 @@
         <Spinner fx:id="sizeSpinner" min="0.5" initialValue="1.0" amountToStepBy="0.5" max="10.0"/>
     </HBox>
 
-    <StackPane maxHeight="700" maxWidth="1150">
+    <StackPane fx:id="canvasParent" maxHeight="700" maxWidth="1150">
         <Canvas fx:id="canvas" height="700" onMouseClicked="#canvasClicked" width="1150"/>
     </StackPane>
 
