@@ -27,38 +27,38 @@ public class Shapes {
     }
 
     public static String toSvg(Shape shape) {
-        //use exact same x & y co-ordinates as getX() & getY() -> it will be easier to convert back & forwards
-        //fill takes named colors, hexadecimal format, rgb & rgba
+         if (shape instanceof Circle) {
+            return svgCircle(shape).toString();
+        } else
+            return svgSquare(shape).toString();
+    }
 
-        StringBuilder svg = new StringBuilder();
+    private static StringBuilder svgCircle(Shape shape) {
+        return new StringBuilder().append("<circle")
+                .append(" cx=\"")
+                .append(shape.getX())
+                .append("\" cy=\"")
+                .append(shape.getY())
+                .append("\" r=\"")
+                .append(((Circle) shape).getRadius())
+                .append("\" fill=\"")
+                .append(shape.getColor())
+                .append("\" />");
+    }
 
-        if (shape instanceof Circle) {
-            svg.append("<circle")
-                    .append(" cx=\"")
-                    .append(shape.getX())
-                    .append("\" cy=\"")
-                    .append(shape.getY())
-                    .append("\" r=\"")
-                    .append(((Circle) shape).getRadius())
-                    .append("\" fill=\"")
-                    .append(shape.getColor())
-                    .append("\" />");
-        } else {
-            svg.append("<rect")
-                    .append(" x=\"")
-                    .append(shape.getX())
-                    .append("\" y=\"")
-                    .append(shape.getY())
-                    .append("\" width=\"")
-                    .append(((Square) shape).getLength())
-                    .append("\" height=\"")
-                    .append(((Square) shape).getLength())
-                    .append("\" fill=\"")
-                    .append(shape.getColor())
-                    .append("\" />");
-        }
-
-        return svg.toString();
+    private static StringBuilder svgSquare(Shape shape) {
+        return new StringBuilder().append("<rect")
+                .append(" x=\"")
+                .append(shape.getX())
+                .append("\" y=\"")
+                .append(shape.getY())
+                .append("\" width=\"")
+                .append(((Square) shape).getLength())
+                .append("\" height=\"")
+                .append(((Square) shape).getLength())
+                .append("\" fill=\"")
+                .append(shape.getColor())
+                .append("\" />");
     }
 
 
