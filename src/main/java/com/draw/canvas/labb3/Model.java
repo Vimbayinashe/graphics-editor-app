@@ -226,7 +226,6 @@ public class Model {
     private List<String> shapesAsSvgList() {
         return shapes.stream()
                 .map(Shapes::toSvg)
-                .peek(System.out::println)
                 .toList();
     }
 
@@ -234,6 +233,7 @@ public class Model {
         List<String> list = new ArrayList<>();
         List<String> shapesAsSvgList = shapesAsSvgList();
 
+        list.add("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         list.add("<svg viewBox=\"0 0 1150 700\" xmlns=\"http://www.w3.org/2000/svg\">\n");
         list.addAll(shapesAsSvgList);
         list.add("</svg>");
@@ -249,6 +249,9 @@ public class Model {
         fileChooser.setInitialFileName("canvas");
 
         File file = fileChooser.showSaveDialog(button.getParentPopup().getScene().getWindow());
+
+        if(file == null)
+            return;
 
         saveFile(svgData, file);
 
