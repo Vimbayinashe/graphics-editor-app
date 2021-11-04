@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Spinner;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -30,6 +31,8 @@ public class Controller {
     private ColorPicker colorPicker;
     @FXML
     private StackPane canvasParent;
+    @FXML
+    MenuItem saveButton;
 
 
     public Controller() {}
@@ -82,7 +85,6 @@ public class Controller {
     private void changeShapeColor(MouseEvent event) {
         Optional<Shape> selectedShape = model.getSelectedShape(event.getX(), event.getY());
         selectedShape.ifPresent(shape -> shape.setColor(model.getColor()));
-        System.out.println(model.getColor());
     }
 
     private void draw() {
@@ -100,8 +102,8 @@ public class Controller {
         model.shapes.add(shape);
 
         //todo: check if this is correct?
-        executorService.submit(() -> model.sendToServer(shape));
-        //model.sendToServer(shape);
+        executorService.submit(() -> model.sendToServer(shape));                  //model.sendToServer(shape);
+
     }
 
     private Shape getNewShape(MouseEvent event) {
@@ -152,7 +154,9 @@ public class Controller {
     }
 
 
-
+    public void saveFile() {
+        model.save(saveButton);
+    }
 }
 
 

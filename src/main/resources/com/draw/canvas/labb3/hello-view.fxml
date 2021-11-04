@@ -9,7 +9,7 @@
 
     <MenuBar>
         <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" text="Save" />
+            <MenuItem fx:id="saveButton" mnemonicParsing="false" onAction="#saveFile" text="Save" />
             <MenuItem mnemonicParsing="false" text="Action 2" />
             <MenuItem mnemonicParsing="false" text="Exit" />
         </Menu>

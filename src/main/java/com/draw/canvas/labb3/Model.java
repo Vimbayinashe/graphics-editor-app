@@ -7,10 +7,16 @@ import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.MenuItem;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+
 
 import java.io.*;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -180,7 +186,8 @@ public class Model {
                         // update shapes in model & re-draw canvas
                         shapes.add(Shapes.circleOf(Color.BLUEVIOLET, Math.random() * 800, Math.random() * 600, 20.0))  //dummy data
 
-                        //avoid re-writing your own shapes [YOU] OR only write shapes once message received from server for all users
+                        //avoid re-writing your own shapes [YOU] OR only write shapes once message received from
+                        // server for all users
                         // => remove all shapes signed [you] from server
                 );
 
@@ -199,7 +206,6 @@ public class Model {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     //add separate executor service for "sendToServer" -> avoid lag experience
@@ -217,18 +223,53 @@ public class Model {
      * avoid re-writing your own shapes [YOU] OR only write shapes once message received from server for all users
      */
 
+    private List<String> shapesAsSvgList() {
+        return shapes.stream()
+                .map(Shapes::toSvg)
+                .peek(System.out::println)
+                .toList();
+    }
 
-    //add getters & setters & property
+    private List<String> svgData() {
+        List<String> list = new ArrayList<>();
+        List<String> shapesAsSvgList = shapesAsSvgList();
 
-    //test drawing & saving shape object  -> compare with classwork first
+        list.add("<svg viewBox=\"0 0 1150 700\" xmlns=\"http://www.w3.org/2000/svg\">\n");
+        list.addAll(shapesAsSvgList);
+        list.add("</svg>");
 
-    public void save() {
-        String openingTag = """
-                    <svg viewBox="0 0 1150 700" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
-                """;
-        String closingTag = "</svg>";
+        return list;
+    }
 
+    public void save(MenuItem button) {
+        List<String> svgData =svgData();
 
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save File");
+        fileChooser.setInitialFileName("canvas");
+
+        File file = fileChooser.showSaveDialog(button.getParentPopup().getScene().getWindow());
+
+        saveFile(svgData, file);
 
     }
+
+    private void saveFile(List<String> list, File file) {
+        Path path = getPath(file);
+
+        try {
+            Files.write(path, list, StandardOpenOption.CREATE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Path getPath( File file) {
+        return Path.of(file.getPath().concat(".svg"));
+    }
+
 }
+
+/*  For showOpenDialog options:
+      fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Vector Files", "*.svg"));
+ */
