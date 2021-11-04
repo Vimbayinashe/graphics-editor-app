@@ -28,12 +28,12 @@ public class Shapes {
 
     public static String toSvg(Shape shape) {
         if (shape instanceof Circle) {
-            return svgCircle(shape).toString();
+            return circleToSvg(shape).toString();
         } else
-            return svgSquare(shape).toString();
+            return squareToSvg(shape).toString();
     }
 
-    private static StringBuilder svgCircle(Shape shape) {
+    private static StringBuilder circleToSvg(Shape shape) {
         return new StringBuilder().append("<circle")
                 .append(" cx=\"")
                 .append(shape.getX())
@@ -46,7 +46,7 @@ public class Shapes {
                 .append("\" />");
     }
 
-    private static StringBuilder svgSquare(Shape shape) {
+    private static StringBuilder squareToSvg(Shape shape) {
         return new StringBuilder().append("<rect")
                 .append(" x=\"")
                 .append(shape.getX())
@@ -58,8 +58,57 @@ public class Shapes {
                 .append(((Square) shape).getLength())
                 .append("\" fill=\"")
                 .append(shape.getColor())
+//                .append("rgb(")
+//                .append(shape.getColor().getRed())
+//                .append(", ")
+//                .append(shape.getColor().getGreen())
+//                .append(", ")
+//                .append(shape.getColor().getBlue())
+//                .append(")")
                 .append("\" />");
     }
 
+    public static Shape parseCircle(String line){
+        double x = 0, y = 0, diameter = 0;
+        Color color = Color.BLACK;
 
+        try {
+            x = parseAttribute(line, "cx");
+            y = parseAttribute(line, "cy");
+            diameter = parseAttribute(line, "r") * 2;
+            color = parseColorAttribute(line);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+       return circleOf(color, x, y, diameter);
+    }
+
+    public static Shape parseSquare(String line){
+        double x = 0, y = 0, length = 0;
+        Color color = Color.BLACK;
+
+        try {
+            x = parseAttribute(line, "x");
+            y = parseAttribute(line, "y");
+            length = parseAttribute(line, "width");
+            color = parseColorAttribute(line);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+       return squareOf(color, x, y, length);
+    }
+
+    private static double parseAttribute(String line, String attribute) {
+        int index = line.indexOf(attribute);
+        String substring = line.substring(index, line.indexOf(" "));
+        return Double.parseDouble(substring.substring(substring.indexOf("\"") + 1, substring.lastIndexOf("\"")));
+    }
+
+    private static Color parseColorAttribute(String line) {
+        int index = line.indexOf("fill");
+        String substring = line.substring(index, line.lastIndexOf("\"") );
+        return Color.web(substring.substring(substring.indexOf("\"") + 1));
+    }
 }

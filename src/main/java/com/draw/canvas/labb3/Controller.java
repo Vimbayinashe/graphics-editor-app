@@ -157,13 +157,10 @@ public class Controller {
     public void saveFile() {
         model.save(saveButton);
     }
+
+    public void exit() {
+        System.exit(0);
+    }
+
 }
 
-
-//todo: maybe
-/*
-*  Shapes Builder
-*  model.shapes.add(Circle.getBuilder().setColor(model.getColor()).setCoords(x, y).setRadius(radius()) => returns a Shape object
-*
-*  disable Undo button when model.status.isEmpty(),     // requires a SimpleBooleanProperty
- */

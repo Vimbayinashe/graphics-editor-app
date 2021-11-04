@@ -172,31 +172,39 @@ public class Model {
         }
     }
 
+    private boolean myLine(String line) {
+        return line.toLowerCase().contains("you");
+    }
+
     private void incomingNetworkHandler() {
         try {
             while (true) {
                 String line = reader.readLine();
-                System.out.println(line);       //remove
 
-                Platform.runLater(() ->
-                        //parse incoming shape SVG format -> Shape object
-                        //shapes.add(parsedShape)
-                        //add Exception handling for x, y , color, radius (double values)
-
-                        // update shapes in model & re-draw canvas
-                        shapes.add(Shapes.circleOf(Color.BLUEVIOLET, Math.random() * 800, Math.random() * 600, 20.0))  //dummy data
-
-                        //avoid re-writing your own shapes [YOU] OR only write shapes once message received from
-                        // server for all users
-                        // => remove all shapes signed [you] from server
-                );
-
+                if(myLine(line))
+                    continue;
+                handleInput(line);
             }
         } catch (IOException e) {
             System.out.println("Disconnected from server - I/O Error");
             Platform.runLater(() -> connected.set(false));
-
         }
+    }
+
+    private void handleInput(String line) {
+        String trimmedLine = line.substring(line.indexOf("]") + 1).trim().toLowerCase();
+
+        if(trimmedLine.contains("rect") || trimmedLine.contains("circle"))
+            Platform.runLater(() -> shapes.add(parseShape(trimmedLine)));
+        else
+            System.out.println("Shape not recognised: " + trimmedLine);
+    }
+
+    private Shape parseShape(String trimmedLine) {
+        if(trimmedLine.contains("rect"))
+            return Shapes.parseSquare(trimmedLine);
+        else
+            return Shapes.parseCircle(trimmedLine);
     }
 
     public void disconnect() {
@@ -215,17 +223,10 @@ public class Model {
         }
     }
 
-
-    /*
-     * send shapes between server & client via svg format
-     * reconvert to Shape object & vice versa
-     *
-     * avoid re-writing your own shapes [YOU] OR only write shapes once message received from server for all users
-     */
-
     private List<String> shapesAsSvgList() {
         return shapes.stream()
                 .map(Shapes::toSvg)
+                .peek(System.out::println)      //todo: remove once svg convert complete
                 .toList();
     }
 
