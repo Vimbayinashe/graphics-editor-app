@@ -10,7 +10,7 @@ import java.io.IOException;
 public class GraphicsEditorApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(GraphicsEditorApplication.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(GraphicsEditorApplication.class.getResource("graphics-editor-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1200, 900);
         stage.setTitle("Graphics Editor");
         stage.setScene(scene);
