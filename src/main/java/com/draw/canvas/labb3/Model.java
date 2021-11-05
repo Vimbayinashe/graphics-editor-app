@@ -77,7 +77,7 @@ public class Model {
     }
 
     public void setShapes(List<Shape> shapes) {
-        this.shapes = FXCollections.observableArrayList(shapes);      //todo: do I need new arrayList here?
+        this.shapes = FXCollections.observableArrayList(shapes);
     }
 
     public void saveCurrentStatus() {
@@ -149,24 +149,22 @@ public class Model {
                 .reduce((first, second) -> second);
     }
 
+    public boolean getConnected() {
+        return connected.get();
+    }
+
     public void connect() {
         try {
-            socket = new Socket("178.174.162.51", 8000);
-//            socket = new Socket("localhost", 8000);
+            socket = new Socket("178.174.162.51", 8000);    //todo: change to localhost
             OutputStream output = socket.getOutputStream();
             writer = new PrintWriter(output, true);
-
 
             InputStream input = socket.getInputStream();
             reader = new BufferedReader(new InputStreamReader(input));
             connected.set(true);
             System.out.println("Connected to server on port 8000");
 
-            //todo: send information to server a) here b)  Controller (where sendToServer is called)
-
-            //    -> a new variable called newShape ? =>
-
-            executorService = Executors.newSingleThreadExecutor();  //use factory thread object; re-usable (threads use up lot of memory)
+            executorService = Executors.newSingleThreadExecutor();
             executorService.submit(this::incomingNetworkHandler);
         } catch (IOException e) {
             e.printStackTrace();
@@ -174,18 +172,14 @@ public class Model {
     }
 
     private boolean skipLine(String line) {
-//        if(line.toLowerCase().contains("server"))
-//            return true;
-//        return line.toLowerCase().contains("you");
         return line.toLowerCase().contains("server");
     }
 
     private void incomingNetworkHandler() {
+        String line;
         try {
             while (true) {
-                String line = reader.readLine();
-                System.out.println(line);
-
+                line = reader.readLine();
                 if(skipLine(line))
                     continue;
                 handleInput(line);
@@ -213,7 +207,7 @@ public class Model {
     private Shape parseShape(String trimmedLine) {
         if(trimmedLine.contains("rect"))
             return Shapes.parseSquare(trimmedLine);
-        else    //add "circle" condition
+        else
             return Shapes.parseCircle(trimmedLine);
     }
 
@@ -225,8 +219,8 @@ public class Model {
             e.printStackTrace();
         }
     }
-
     //add separate executor service for "sendToServer" -> avoid lag experience
+
     public void sendToServer(String svg) {
         if (connected.get()) {
             //add executor service here -> to be gui interface independent
@@ -263,9 +257,7 @@ public class Model {
 
         if(file == null)
             return;
-
         saveFile(svgData, file);
-
     }
 
     private void saveFile(List<String> list, File file) {
@@ -278,12 +270,7 @@ public class Model {
         }
     }
 
-    private Path getPath( File file) {
+    private Path getPath(File file) {
         return Path.of(file.getPath().concat(".svg"));
     }
-
 }
-
-/*  For showOpenDialog options:
-      fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Vector Files", "*.svg"));
- */
