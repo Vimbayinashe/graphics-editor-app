@@ -4,6 +4,8 @@ import com.draw.canvas.labb3.shapes.basicshapes.Circle;
 import com.draw.canvas.labb3.shapes.basicshapes.Square;
 import javafx.scene.paint.Color;
 
+import java.util.Arrays;
+
 public class Shapes {
     public static Shape circleOf(Color color, double x, double y, double radius) {
         return new Circle(color, x, y, radius);
@@ -60,43 +62,47 @@ public class Shapes {
     }
 
     public static Shape parseCircle(String line) throws IllegalArgumentException {
-        String substring = line.substring(8);
-        double x = parseAttribute(substring, "cx");
-        double y = parseAttribute(substring, "cy");
-        double diameter = parseAttribute(substring, "r") * 2;
-        Color color = parseColorAttribute(substring);
+        String[] attributes = line.split(" ");
+
+        double x = parseAttribute(attributes, "cx");
+        double y = parseAttribute(attributes, "cy");
+        double diameter = parseAttribute(attributes, "r=") * 2;
+        Color color = parseColorAttribute(attributes);
 
         return circleOf(color, x, y, diameter);
     }
 
     public static Shape parseSquare(String line) throws IllegalArgumentException {
-        String substring = line.substring(6);
-        double x = parseAttribute(substring, "x");
-        double y = parseAttribute(substring, "y");
-        double length = parseAttribute(substring, "width");
-        Color color = parseColorAttribute(substring);
+        String[] attributes = line.split(" ");
+
+        double x = parseAttribute(attributes, "x=");
+        double y = parseAttribute(attributes, "y=");
+        double length = parseAttribute(attributes, "width");
+        Color color = parseColorAttribute(attributes);
 
         return squareOf(color, x, y, length);
     }
 
-    private static double parseAttribute(String line, String attribute) {
-        int index = line.indexOf(attribute);
-        System.out.println(line);
-        String substring = line.substring(index, line.indexOf(" "));
-        try {
-            return Double.parseDouble(substring.substring(substring.indexOf("\"") + 1, substring.lastIndexOf("\"")));
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid value in attribute - " + attribute);
-        }
+    private static double parseAttribute(String[] attributes, String name) {
+        String substring = Arrays.stream(attributes)
+                .filter(string -> string.contains(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(name + " not found."));
+
+        return getValue(substring);
     }
 
-    private static Color parseColorAttribute(String line) {
-        int index = line.indexOf("fill");
-        String substring = line.substring(index, line.lastIndexOf("\""));
-        try {
-            return Color.web(substring.substring(substring.indexOf("\"") + 1));
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Value of fill attribute could not be converted to a valid color");
-        }
+    private static double getValue(String attribute) {
+        return Double.parseDouble(attribute.substring(attribute.indexOf("\"") + 1, attribute.lastIndexOf("\"")));
     }
+
+    private static Color parseColorAttribute(String[] attributes) {
+        String color = Arrays.stream(attributes)
+                .filter(attribute -> attribute.contains("fill"))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("fill attribute not found."));
+
+        return Color.web(color.substring(color.indexOf("\"") + 1, color.lastIndexOf("\"")));
+    }
+
 }

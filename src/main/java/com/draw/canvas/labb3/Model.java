@@ -174,9 +174,10 @@ public class Model {
     }
 
     private boolean skipLine(String line) {
-        if(line.toLowerCase().contains("server"))
-            return true;
-        return line.toLowerCase().contains("you");
+//        if(line.toLowerCase().contains("server"))
+//            return true;
+//        return line.toLowerCase().contains("you");
+        return line.toLowerCase().contains("server");
     }
 
     private void incomingNetworkHandler() {
@@ -201,6 +202,7 @@ public class Model {
         if(trimmedLine.contains("rect") || trimmedLine.contains("circle"))
             try {
                 Platform.runLater(() -> shapes.add(parseShape(trimmedLine)));
+                //exception must be handled inside lambda expression -> create new method OR Shape shape = parseShape(trimmedLine);
             } catch (Exception e) {
                 System.out.println(e.getMessage() + " in line: " + trimmedLine);
             }
@@ -211,7 +213,7 @@ public class Model {
     private Shape parseShape(String trimmedLine) {
         if(trimmedLine.contains("rect"))
             return Shapes.parseSquare(trimmedLine);
-        else
+        else    //add "circle" condition
             return Shapes.parseCircle(trimmedLine);
     }
 
@@ -227,6 +229,7 @@ public class Model {
     //add separate executor service for "sendToServer" -> avoid lag experience
     public void sendToServer(String svg) {
         if (connected.get()) {
+            //add executor service here -> to be gui interface independent
             writer.println(svg);
         }
     }
@@ -234,7 +237,6 @@ public class Model {
     private List<String> shapesAsSvgList() {
         return shapes.stream()
                 .map(Shapes::toSvg)
-                .peek(System.out::println)      //todo: remove once svg convert complete
                 .toList();
     }
 
