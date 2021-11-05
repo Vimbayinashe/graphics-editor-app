@@ -14,16 +14,10 @@ public class Shapes {
     }
 
     public static Shape copyOf(Shape shape) {
-
         if (shape instanceof Circle)
             return new Circle(shape.getColor(), shape.getX(), shape.getY(), ((Circle) shape).getRadius() * 2);
         else
             return new Square(shape.getColor(), shape.getX(), shape.getY(), ((Square) shape).getLength());
-
-        //is default shape necessary as below OR just else new Square as above ...
-//        else {
-//            return new Circle(Color.BLACK, 0, 0, 0);
-//        }
     }
 
     public static String toSvg(Shape shape) {
@@ -42,7 +36,7 @@ public class Shapes {
                 .append("\" r=\"")
                 .append(((Circle) shape).getRadius())
                 .append("\" fill=\"")
-                .append(shape.getColor())
+                .append(formatColor(shape.getColor()))
                 .append("\" />");
     }
 
@@ -57,58 +51,52 @@ public class Shapes {
                 .append("\" height=\"")
                 .append(((Square) shape).getLength())
                 .append("\" fill=\"")
-                .append(shape.getColor())
-//                .append("rgb(")
-//                .append(shape.getColor().getRed())
-//                .append(", ")
-//                .append(shape.getColor().getGreen())
-//                .append(", ")
-//                .append(shape.getColor().getBlue())
-//                .append(")")
+                .append(formatColor(shape.getColor()))
                 .append("\" />");
     }
 
-    public static Shape parseCircle(String line){
-        double x = 0, y = 0, diameter = 0;
-        Color color = Color.BLACK;
-
-        try {
-            x = parseAttribute(line, "cx");
-            y = parseAttribute(line, "cy");
-            diameter = parseAttribute(line, "r") * 2;
-            color = parseColorAttribute(line);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-       return circleOf(color, x, y, diameter);
+    private static String formatColor(Color color) {
+        return "#" + color.toString().substring(2);
     }
 
-    public static Shape parseSquare(String line){
-        double x = 0, y = 0, length = 0;
-        Color color = Color.BLACK;
+    public static Shape parseCircle(String line) throws IllegalArgumentException {
+        String substring = line.substring(8);
+        double x = parseAttribute(substring, "cx");
+        double y = parseAttribute(substring, "cy");
+        double diameter = parseAttribute(substring, "r") * 2;
+        Color color = parseColorAttribute(substring);
 
-        try {
-            x = parseAttribute(line, "x");
-            y = parseAttribute(line, "y");
-            length = parseAttribute(line, "width");
-            color = parseColorAttribute(line);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return circleOf(color, x, y, diameter);
+    }
 
-       return squareOf(color, x, y, length);
+    public static Shape parseSquare(String line) throws IllegalArgumentException {
+        String substring = line.substring(6);
+        double x = parseAttribute(substring, "x");
+        double y = parseAttribute(substring, "y");
+        double length = parseAttribute(substring, "width");
+        Color color = parseColorAttribute(substring);
+
+        return squareOf(color, x, y, length);
     }
 
     private static double parseAttribute(String line, String attribute) {
         int index = line.indexOf(attribute);
+        System.out.println(line);
         String substring = line.substring(index, line.indexOf(" "));
-        return Double.parseDouble(substring.substring(substring.indexOf("\"") + 1, substring.lastIndexOf("\"")));
+        try {
+            return Double.parseDouble(substring.substring(substring.indexOf("\"") + 1, substring.lastIndexOf("\"")));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid value in attribute - " + attribute);
+        }
     }
 
     private static Color parseColorAttribute(String line) {
         int index = line.indexOf("fill");
-        String substring = line.substring(index, line.lastIndexOf("\"") );
-        return Color.web(substring.substring(substring.indexOf("\"") + 1));
+        String substring = line.substring(index, line.lastIndexOf("\""));
+        try {
+            return Color.web(substring.substring(substring.indexOf("\"") + 1));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Value of fill attribute could not be converted to a valid color");
+        }
     }
 }

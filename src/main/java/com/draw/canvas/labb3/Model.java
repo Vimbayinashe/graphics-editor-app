@@ -151,7 +151,8 @@ public class Model {
 
     public void connect() {
         try {
-            socket = new Socket("192.168.1.137", 8000);
+            socket = new Socket("178.174.162.51", 8000);
+//            socket = new Socket("localhost", 8000);
             OutputStream output = socket.getOutputStream();
             writer = new PrintWriter(output, true);
 
@@ -172,7 +173,9 @@ public class Model {
         }
     }
 
-    private boolean myLine(String line) {
+    private boolean skipLine(String line) {
+        if(line.toLowerCase().contains("server"))
+            return true;
         return line.toLowerCase().contains("you");
     }
 
@@ -180,8 +183,9 @@ public class Model {
         try {
             while (true) {
                 String line = reader.readLine();
+                System.out.println(line);
 
-                if(myLine(line))
+                if(skipLine(line))
                     continue;
                 handleInput(line);
             }
@@ -195,9 +199,13 @@ public class Model {
         String trimmedLine = line.substring(line.indexOf("]") + 1).trim().toLowerCase();
 
         if(trimmedLine.contains("rect") || trimmedLine.contains("circle"))
-            Platform.runLater(() -> shapes.add(parseShape(trimmedLine)));
+            try {
+                Platform.runLater(() -> shapes.add(parseShape(trimmedLine)));
+            } catch (Exception e) {
+                System.out.println(e.getMessage() + " in line: " + trimmedLine);
+            }
         else
-            System.out.println("Shape not recognised: " + trimmedLine);
+            System.out.println("Svg format not recognised: " + trimmedLine);
     }
 
     private Shape parseShape(String trimmedLine) {
@@ -217,9 +225,9 @@ public class Model {
     }
 
     //add separate executor service for "sendToServer" -> avoid lag experience
-    public void sendToServer(Shape shape) {
+    public void sendToServer(String svg) {
         if (connected.get()) {
-            writer.println(Shapes.toSvg(shape));
+            writer.println(svg);
         }
     }
 

@@ -49,17 +49,9 @@ public class Controller {
         colorPicker.valueProperty().bindBidirectional(model.colorProperty());
         sizeSpinner.getValueFactory().valueProperty().bindBidirectional(model.sizeRatioProperty());
 
-        //undoMenuItem.setDisable(model.statusIsEmpty());
-        //undoMenuItem.disableProperty().bind(model.statusIsEmpty());
-
-
         model.shapes.addListener((ListChangeListener<Shape>) change ->  {
             draw();
         });
-
-        //add canvas Listener to re-draw when re-sized IF ResizableCanvas implemented
-//        canvas.widthProperty().addListener(observable -> draw());
-//        canvas.heightProperty().addListener(observable -> draw());
     }
 
     public void canvasClicked(MouseEvent event) {
@@ -102,7 +94,8 @@ public class Controller {
         model.shapes.add(shape);
 
         //todo: check if this is correct?
-        executorService.submit(() -> model.sendToServer(shape));                  //model.sendToServer(shape);
+//        executorService.submit(() -> model.sendToServer(Shapes.toSvg(shape)));
+        model.sendToServer(Shapes.toSvg(shape));
 
     }
 
