@@ -61,7 +61,7 @@ public class Shapes {
         return "#" + color.toString().substring(2);
     }
 
-    public static Shape parseCircle(String line) throws IllegalArgumentException {
+    public static Shape parseCircle(String line) {
         String[] attributes = line.split(" ");
 
         double x = parseAttribute(attributes, "cx");
@@ -72,7 +72,7 @@ public class Shapes {
         return circleOf(color, x, y, diameter);
     }
 
-    public static Shape parseSquare(String line) throws IllegalArgumentException {
+    public static Shape parseSquare(String line) {
         String[] attributes = line.split(" ");
 
         double x = parseAttribute(attributes, "x=");
@@ -87,7 +87,7 @@ public class Shapes {
         String substring = Arrays.stream(attributes)
                 .filter(string -> string.contains(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(name + " not found."));
+                .orElseThrow(IllegalArgumentException::new);
 
         return getValue(substring);
     }
@@ -100,7 +100,7 @@ public class Shapes {
         String color = Arrays.stream(attributes)
                 .filter(attribute -> attribute.contains("fill"))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("fill attribute not found."));
+                .orElseThrow(IllegalArgumentException::new);
 
         return Color.web(color.substring(color.indexOf("\"") + 1, color.lastIndexOf("\"")));
     }

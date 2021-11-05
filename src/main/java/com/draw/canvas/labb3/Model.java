@@ -194,14 +194,19 @@ public class Model {
         String trimmedLine = line.substring(line.indexOf("]") + 1).trim().toLowerCase();
 
         if(trimmedLine.contains("rect") || trimmedLine.contains("circle"))
-            try {
-                Platform.runLater(() -> shapes.add(parseShape(trimmedLine)));
-                //exception must be handled inside lambda expression -> create new method OR Shape shape = parseShape(trimmedLine);
-            } catch (Exception e) {
-                System.out.println(e.getMessage() + " in line: " + trimmedLine);
-            }
+            convertToShape(trimmedLine);
         else
             System.out.println("Svg format not recognised: " + trimmedLine);
+    }
+
+    private void convertToShape(String trimmedLine) {
+        try {
+            Shape shape = parseShape(trimmedLine);
+            Platform.runLater(() -> shapes.add(shape));
+        } catch (Exception e) {
+            System.out.println("Error in line: " + trimmedLine);
+            e.printStackTrace();
+        }
     }
 
     private Shape parseShape(String trimmedLine) {
@@ -219,11 +224,9 @@ public class Model {
             e.printStackTrace();
         }
     }
-    //add separate executor service for "sendToServer" -> avoid lag experience
 
     public void sendToServer(String svg) {
         if (connected.get()) {
-            //add executor service here -> to be gui interface independent
             writer.println(svg);
         }
     }
