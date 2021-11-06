@@ -61,7 +61,7 @@ public class Circle extends Shape {
                 "x=" + getX() +
                 ", y=" + getY() +
                 ", color=" + getColor() +
-                "radius=" + radius +
+                ", radius=" + radius +
                 '}';
     }
 }

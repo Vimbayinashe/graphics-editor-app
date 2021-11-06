@@ -63,7 +63,7 @@ public class Square extends Shape {
                 "x=" + getX() +
                 ", y=" + getY() +
                 ", color=" + getColor() +
-                "length=" + length +
+                ", length=" + length +
                 '}';
     }
 }
