@@ -20,6 +20,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Stream;
 
 public class Model {
 
@@ -275,5 +276,40 @@ public class Model {
 
     private Path getPath(File file) {
         return Path.of(file.getPath().concat(".svg"));
+    }
+
+    public void importFile(MenuItem button) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Vector Files", "*.svg"));
+
+        File file = fileChooser.showOpenDialog(button.getParentPopup().getScene().getWindow());
+
+        if(file == null)
+            return;
+
+        List<String> fileContents = readFile(file);
+        drawImportedShapes(fileContents);
+    }
+
+    private void drawImportedShapes(List<String> fileContents) {
+        fileContents.stream()
+                .filter(this::isSvgShape)
+                .forEach(this::convertToShape);
+    }
+
+    private List<String> readFile(File file) {
+        Path path = file.toPath();
+
+        try(Stream<String> contents = Files.lines(path)) {
+            return contents.toList();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return List.of();
+        }
+    }
+
+    private boolean isSvgShape(String line) {
+        return !line.contains("svg") && !line.contains("xml") && !line.isEmpty();
     }
 }

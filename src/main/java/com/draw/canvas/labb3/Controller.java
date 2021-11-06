@@ -30,7 +30,9 @@ public class Controller {
     @FXML
     private StackPane canvasParent;
     @FXML
-    MenuItem saveButton;
+    private MenuItem saveButton;
+    @FXML
+    private MenuItem importButton;
 
 
     public Controller() {}
@@ -149,5 +151,8 @@ public class Controller {
         System.exit(0);
     }
 
+    public void importFile() {
+        model.importFile(importButton);
+    }
 }
 

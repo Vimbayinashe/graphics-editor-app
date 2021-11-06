@@ -10,6 +10,7 @@
     <MenuBar>
         <Menu mnemonicParsing="false" text="File">
             <MenuItem fx:id="saveButton" mnemonicParsing="false" onAction="#saveFile" text="Save" />
+            <MenuItem fx:id="importButton" mnemonicParsing="false" onAction="#importFile" text="Import" />
             <MenuItem mnemonicParsing="false" onAction="#exit" text="Exit" />
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
@@ -32,7 +33,6 @@
                 <Button mnemonicParsing="false" onAction="#changeColor" text="Change Color" />
             </buttons>
         </ButtonBar>
-
     </HBox>
 
     <HBox alignment="CENTER_LEFT" prefHeight="80.0">

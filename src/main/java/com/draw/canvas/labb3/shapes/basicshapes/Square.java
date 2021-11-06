@@ -42,7 +42,6 @@ public class Square extends Shape {
         setLength(length);
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
