@@ -93,7 +93,7 @@ public class Controller {
         if(model.getConnected())
             model.sendToServer(Shapes.toSvg(shape));
         else
-            model.shapes.add(shape);
+            model.addShape(shape);
     }
 
     private Shape getNewShape(MouseEvent event) {

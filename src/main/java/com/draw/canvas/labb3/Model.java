@@ -299,9 +299,7 @@ public class Model {
     }
 
     private List<String> readFile(File file) {
-        Path path = file.toPath();
-
-        try(Stream<String> contents = Files.lines(path)) {
+        try(Stream<String> contents = Files.lines(file.toPath())) {
             return contents.toList();
         } catch (IOException e) {
             e.printStackTrace();
